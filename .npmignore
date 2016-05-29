@@ -1,0 +1,6 @@
+.vscode
+typings
+test
+*.ts
+*.log
+ts*.json

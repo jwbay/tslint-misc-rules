@@ -1,0 +1,38 @@
+{
+  "name": "tslint-misc-rules",
+  "version": "1.0.0",
+  "description": "Collection of miscellaneous TSLint rules",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint rules/*.ts test/*.ts",
+    "ci": "npm run build && npm run lint",
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwbay/tslint-misc-rules.git"
+  },
+  "keywords": [
+    "tslint",
+    "rules",
+    "jsx",
+    "tsx",
+    "typescript",
+    "lint"
+  ],
+  "author": "Justin Bay",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jwbay/tslint-misc-rules/issues"
+  },
+  "homepage": "https://github.com/jwbay/tslint-misc-rules#readme",
+  "dependencies": {
+    "tslint": "^3.10.2",
+    "typescript": "^1.8.10"
+  },
+  "devDependencies": {
+    "tslint-eslint-rules": "^1.3.0",
+    "tslint-microsoft-contrib": "^2.0.7"
+  }
+}
