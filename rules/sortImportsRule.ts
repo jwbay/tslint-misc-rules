@@ -12,7 +12,7 @@ class SortImportsWalker extends Lint.RuleWalker {
 		for (const importGroup of this.getImportGroups(node)) {
 			const importLines = importGroup.map(line => line.getText());
 			const importLinesForComparison = importLines.map(line => line.toLowerCase().replace(' {', ' +'));
-			const sortedImportLines = [...importLinesForComparison].sort();
+			const sortedImportLines = importLinesForComparison.slice().sort();
 
 			for (let i = 0; i < importLines.length; i += 1) {
 				if (importLinesForComparison[i] !== sortedImportLines[i]) {

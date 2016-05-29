@@ -7,7 +7,8 @@
     "build": "tsc",
     "lint": "tslint rules/*.ts test/*.ts",
     "ci": "npm run build && npm run lint",
-    "test": "exit 0"
+    "test": "exit 0",
+    "prepublish": "npm run ci"
   },
   "repository": {
     "type": "git",
