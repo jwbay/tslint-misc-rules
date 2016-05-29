@@ -2,6 +2,6 @@
   "compilerOptions": {
     "module": "commonjs",
     "noEmitOnError": true,
-    "target": "es2015"
+    "target": "es5"
   }
 }

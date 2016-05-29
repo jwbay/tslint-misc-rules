@@ -16,7 +16,11 @@ class SortImportsWalker extends Lint.RuleWalker {
 
 			for (let i = 0; i < importLines.length; i += 1) {
 				if (importLinesForComparison[i] !== sortedImportLines[i]) {
-					const expectedImport = importGroup[importLinesForComparison.findIndex(line => line === sortedImportLines[i])];
+					const expectedImportIndex = this.findIndex(
+						importLinesForComparison,
+						line => line === sortedImportLines[i]
+					);
+					const expectedImport = importGroup[expectedImportIndex];
 					const actualImport = importGroup[i];
 					const message = this.getFailureMessage(expectedImport, actualImport);
 					this.addFailure(
@@ -49,6 +53,14 @@ class SortImportsWalker extends Lint.RuleWalker {
 		}
 
 		return importGroups.filter(group => group.length > 0);
+	}
+
+	private findIndex(array: string[], predicate: (str: string) => boolean) {
+		for (let i = 0; i < array.length; i += 1) {
+			if (predicate(array[i])) {
+				return i;
+			}
+		}
 	}
 
 	private isImportStatement(node: ts.Node): node is ts.ImportDeclaration {
