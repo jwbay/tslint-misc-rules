@@ -19,7 +19,7 @@ class PreferEs6ImportsWalker extends Lint.RuleWalker {
 			this.isStringLiteralExpression(moduleReference.expression)
 		) {
 			const modulePath = moduleReference.expression.getText();
-			const moduleName = modulePath.split(/[\/\\]+/).pop().replace(/['|']/g, '');
+			const moduleName = modulePath.split(/[\/\\]+/).pop().replace(/['"]/g, '');
 
 			if (bannedModuleRequires.some(banned => moduleName === banned)) {
 				this.addFailure(
