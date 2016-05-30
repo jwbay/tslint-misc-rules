@@ -24,7 +24,7 @@ class JsxNoBracesForStringAttributesWalker extends Lint.RuleWalker {
 		for (const attribute of nonSpreadAttributes) {
 			const { initializer, name } = attribute;
 			if (!initializer) {
-				return;
+				continue;
 			}
 
 			const value = initializer.getChildAt(1);
