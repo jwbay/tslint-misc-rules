@@ -24,7 +24,7 @@ class JsxAttributeSpacingWalker extends Lint.RuleWalker {
 		for (const attribute of nonSpreadAttributes) {
 			const [identifier, assignment, initializer] = attribute.getChildren();
 			if (!initializer) {
-				return;
+				continue;
 			}
 
 			if (
