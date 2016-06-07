@@ -24,14 +24,14 @@ class JsxAttributeValueSpacingWalker extends Lint.RuleWalker {
 		for (const attribute of nonSpreadAttributes) {
 			const { initializer, name } = attribute;
 			if (!initializer) {
-				return;
+				continue;
 			}
 
 			const value = initializer.getChildAt(1);
 			const closingBrace = initializer.getChildAt(2);
 
 			if (!value || !this.isClosingBrace(closingBrace)) {
-				return;
+				continue;
 			}
 
 			if (
