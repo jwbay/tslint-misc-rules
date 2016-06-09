@@ -8,19 +8,19 @@ const passes = (
 const fails = (
     <div>
         <span className={'bar' } />
-                        ~~~~~~~~  [no-opening-space]
+                         ~  [no-opening-space]
         <span className={ 'bar'} />
-                        ~~~~~~~~  [no-closing-space]
+                               ~  [no-closing-space]
         <span className={'bar'} />
-                        ~~~~~~~  [no-opening-space]
-                        ~~~~~~~  [no-closing-space]
+                         ~  [no-opening-space]
+                              ~  [no-closing-space]
         {value }
-        ~~~~~~~~  [no-opening-space]
+         ~  [no-opening-space]
         { value}
-        ~~~~~~~~  [no-closing-space]
+               ~  [no-closing-space]
         {value}
-        ~~~~~~~  [no-closing-space]
-        ~~~~~~~  [no-opening-space]
+              ~  [no-closing-space]
+         ~  [no-opening-space]
     </div>
 );
 
