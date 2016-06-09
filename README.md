@@ -18,8 +18,8 @@ Collection of miscellaneous TSLint rules
       "module2"
     ],
     "jsx-attribute-spacing": true,
-    "jsx-no-braces-for-string-attributes": true,
-    "jsx-attribute-value-spacing": true
+    "jsx-expression-spacing": true,
+    "jsx-no-braces-for-string-attributes": true
   },
   "rulesDirectory": [
     "./node_modules/tslint-misc-rules/rules"
