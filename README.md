@@ -82,16 +82,24 @@ Passes:
 <div prop={ value }/>
 ```
 
-## "jsx-attribute-value-spacing"
+## "jsx-expression-spacing"
 Fails:
 ```jsx
 <div prop={value}/>
 <div prop={ value}/>
 <div prop={value }/>
+<div>
+  {value}
+  { value}
+  {value }
+</div>
 ```
 Passes:
 ```jsx
 <div prop={ value }/>
+<div>
+  { value }
+</div>
 ```
 
 ## "jsx-no-braces-for-string-attributes"
