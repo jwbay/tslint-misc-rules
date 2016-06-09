@@ -1,0 +1,15 @@
+const value = "value";
+
+const z = (
+    <div>
+        <span className={ 'bar' } />
+              ~~~~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have braces around string prop 'bar']
+        <span className='bar' />
+        <a id="123" 
+              className={ "bar" }
+              ~~~~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have braces around string prop "bar"]
+              href="/foo"/>
+        <span className="bar" />
+        <span className={ value } />
+    </div>
+);
