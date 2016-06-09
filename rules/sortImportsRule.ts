@@ -64,7 +64,10 @@ class SortImportsWalker extends Lint.RuleWalker {
 	}
 
 	private isImportStatement(node: ts.Node): node is ts.ImportDeclaration {
-		return node.kind === ts.SyntaxKind.ImportDeclaration;
+		return (
+			node.kind === ts.SyntaxKind.ImportDeclaration ||
+			this.isImportRequireStatement(node)
+		);
 	}
 
 	private getFailureMessage(expectedImport: ts.ImportDeclaration, actualImport: ts.ImportDeclaration) {
@@ -73,11 +76,19 @@ class SortImportsWalker extends Lint.RuleWalker {
 		return `out-of-order imports: expected '${expected}' but saw '${actual}'`;
 	}
 
-	private getImportBindingName(node: ts.ImportDeclaration) {
-		if (node.importClause) {
-			return node.importClause.getText();
-		}
+	private getImportBindingName(node: ts.ImportDeclaration | ts.ImportEqualsDeclaration) {
+		if (this.isImportRequireStatement(node)) {
+			return node.name.getText();
+		} else {
+			if (node.importClause) {
+				return node.importClause.getText();
+			}
 
-		return node.moduleSpecifier.getText();
+			return node.moduleSpecifier.getText();
+		}
+	}
+
+	private isImportRequireStatement(node: ts.Node): node is ts.ImportEqualsDeclaration {
+		return node.kind === ts.SyntaxKind.ImportEqualsDeclaration;
 	}
 }

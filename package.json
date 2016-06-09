@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc",
     "lint": "tslint rules/*.ts test/*.ts",
-    "ci": "npm run build && npm run lint",
-    "test": "exit 0",
+    "ci": "npm run build && npm run lint && npm run test",
+    "test": "tslint --test test/sortImportsRule",
     "prepublish": "npm run ci"
   },
   "repository": {
