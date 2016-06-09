@@ -26,8 +26,8 @@ class JsxExpressionSpacingWalker extends Lint.RuleWalker {
 		if (!this.isPrecededByValidWhitespace(value)) {
 			this.addFailure(
 				this.createFailure(
-					node.getStart(),
-					node.getWidth(),
+					node.getStart() + 1,
+					1,
 					'jsx expression should have one space after opening \'{\''
 				)
 			);
@@ -36,8 +36,8 @@ class JsxExpressionSpacingWalker extends Lint.RuleWalker {
 		if (!this.isPrecededByValidWhitespace(closingBrace)) {
 			this.addFailure(
 				this.createFailure(
-					node.getStart(),
-					node.getWidth(),
+					closingBrace.getStart(),
+					1,
 					'jsx expression should have one space before closing \'}\''
 				)
 			);
