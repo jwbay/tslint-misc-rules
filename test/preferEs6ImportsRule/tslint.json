@@ -1,0 +1,9 @@
+{
+    "rules": {
+        "prefer-es6-imports": [
+            true,
+            "module"
+        ]
+    },
+    "rulesDirectory": "../../rules"
+}

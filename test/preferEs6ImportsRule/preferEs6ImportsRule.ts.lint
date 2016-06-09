@@ -1,0 +1,14 @@
+import x = require('module');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [use es6 import syntax when importing module]
+import x = require('../module');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [use es6 import syntax when importing module]
+import x = require('path/to/module');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  [use es6 import syntax when importing module]
+
+import * as x from 'module';
+import * as x from '../module';
+import * as x from 'path/to/module';
+
+import x from 'module';
+import x from '../module';
+import x from 'path/to/module';
