@@ -1,0 +1,23 @@
+const passes = (
+    <div>
+        <span className='bar' />
+        <span className={ value } />
+    </div>
+);
+
+const fails = (
+    <div>
+        <span className = 'bar' />
+              ~~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+        <span className= 'bar' />
+              ~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+        <span className ='bar' />
+              ~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+        <span className = { value } />
+              ~~~~~~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+        <span className= { value } />
+              ~~~~~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+        <span className ={ value } />
+              ~~~~~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+    </div>
+);
