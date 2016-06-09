@@ -1,0 +1,28 @@
+const passes = (
+    <div>
+        <span className={ value } />
+        { value }
+    </div>
+);
+
+const fails = (
+    <div>
+        <span className={'bar' } />
+                        ~~~~~~~~  [no-opening-space]
+        <span className={ 'bar'} />
+                        ~~~~~~~~  [no-closing-space]
+        <span className={'bar'} />
+                        ~~~~~~~  [no-opening-space]
+                        ~~~~~~~  [no-closing-space]
+        {value }
+        ~~~~~~~~  [no-opening-space]
+        { value}
+        ~~~~~~~~  [no-closing-space]
+        {value}
+        ~~~~~~~  [no-closing-space]
+        ~~~~~~~  [no-opening-space]
+    </div>
+);
+
+[no-opening-space]: jsx expression should have one space after opening '{'
+[no-closing-space]: jsx expression should have one space before closing '}'
