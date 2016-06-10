@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "class-method-newlines": true
+    },
+    "rulesDirectory": "../../rules"
+}

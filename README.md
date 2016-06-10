@@ -17,6 +17,7 @@ Collection of miscellaneous TSLint rules
       "module1",
       "module2"
     ],
+    "class-method-newlines": true,
     "jsx-attribute-spacing": true,
     "jsx-expression-spacing": true,
     "jsx-no-braces-for-string-attributes": true
@@ -69,6 +70,47 @@ import mod = require("module1");
 import mod = require("path/to/module1");
 import mod = require("../module1");
 ```
+
+## "class-method-newlines"
+Ensure each method in class is preceded by a newline.  
+
+Fails:
+```ts
+class foo {
+    propertyOne: any;
+    propertyTwo: any;
+    one() {
+    }
+    two() {
+    }
+}
+```
+
+Passes:
+```ts
+class foo {
+    propertyOne: any;
+    propertyTwo: any;
+
+    one() {
+    }
+
+    two() {
+    }
+}
+```
+
+The first method is exempt, so this also passes:
+```ts
+class foo {
+    one() {
+    }
+
+    two() {
+    }
+}
+```
+
 
 ## "jsx-attribute-spacing"
 Fails:
