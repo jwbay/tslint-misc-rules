@@ -1,0 +1,16 @@
+{
+    "rules": {
+        "react-lifecycle-order": [
+            true,
+            "componentWillMount",
+            "componentWillReceiveProps",
+            "componentDidMount",
+            "shouldComponentUpdate",
+            "componentWillUpdate",
+            "componentDidUpdate",
+            "render",
+            "componentWillUnmount"
+        ]
+    },
+    "rulesDirectory": "../../rules"
+}
