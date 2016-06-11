@@ -144,6 +144,32 @@ Passes:
 </div>
 ```
 
+## "jsx-no-closing-bracket-newline"
+Fails:
+```jsx
+  <a className="asdf"
+      href="/foo"
+  />
+
+  <div
+      className="qwer"
+      id="asdf"
+  >
+      text
+  </div>
+```
+
+Passes:
+```jsx
+  <a className="asdf"
+      href="/foo" />
+
+  <div
+      className="qwer"
+      id="asdf">
+      text
+  </div>
+```
 ## "jsx-no-braces-for-string-attributes"
 Fails:
 ```jsx

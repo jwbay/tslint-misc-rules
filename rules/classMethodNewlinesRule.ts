@@ -1,5 +1,6 @@
 import * as Lint from 'tslint/lib/lint';
 import * as ts from 'typescript';
+import getLeadingWhitespace from '../helpers/getLeadingWhitespace';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
@@ -22,7 +23,7 @@ class ClassMethodNewlinesWalker extends Lint.RuleWalker {
 
 	private validate(node: classType) {
 		for (const method of this.getMethods(node)) {
-			const newlines = this.getLeadingWhitespace(method).match(/\n/g).length;
+			const newlines = getLeadingWhitespace(method).match(/\n/g).length;
 			const valid = method === node.members[0]
 				? newlines === 1
 				: newlines === 2;
@@ -46,9 +47,5 @@ class ClassMethodNewlinesWalker extends Lint.RuleWalker {
 		}
 
 		return node.members.filter(m => m.kind === ts.SyntaxKind.MethodDeclaration) as ts.MethodDeclaration[];
-	}
-
-	private getLeadingWhitespace(node: ts.Node) {
-		return node.getFullText().slice(0, node.getStart() - node.getFullStart());
 	}
 }

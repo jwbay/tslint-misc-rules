@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "jsx-no-closing-bracket-newline": true
+    },
+    "rulesDirectory": "../../rules"
+}
