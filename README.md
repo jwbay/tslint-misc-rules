@@ -20,7 +20,8 @@ Collection of miscellaneous TSLint rules
     "class-method-newlines": true,
     "jsx-attribute-spacing": true,
     "jsx-expression-spacing": true,
-    "jsx-no-braces-for-string-attributes": true
+    "jsx-no-braces-for-string-attributes": true,
+    "react-lifecycle-order": true
   },
   "rulesDirectory": [
     "./node_modules/tslint-misc-rules/rules"
@@ -56,19 +57,20 @@ import d from "d";
 ```
 
 ## "prefer-es6-imports"
+With configuration (required):
 ```json
 {
   "prefer-es6-imports": [
     true,
-    "module1"
+    "module-name"
   ]
 }
 ```
 Fails:
 ```ts
-import mod = require("module1");
-import mod = require("path/to/module1");
-import mod = require("../module1");
+import mod = require("module-name");
+import mod = require("path/to/module-name");
+import mod = require("../module-name");
 ```
 
 ## "class-method-newlines"
@@ -179,3 +181,45 @@ Passes:
 ```jsx
 <div prop="value"/>
 ```
+
+## "react-lifecycle-order"
+With configuration (optional):
+```json
+{
+  "react-lifecycle-order": [
+    true,
+    "componentWillMount",
+    "render",
+    "componentWillUnmount"
+  ]
+}
+```
+Fails:
+```ts
+class extends React.Component {
+    componentWillMount() {
+    }
+
+    componentWillUnmount() {
+    }
+
+    render() {
+    }
+}
+```
+
+Passes:
+```ts
+class extends React.Component {
+    componentWillMount() {
+    }
+
+    render() {
+    }
+
+    componentWillUnmount() {
+    }
+}
+```
+
+If configuration is not specified, React's [invocation order](https://facebook.github.io/react/docs/component-specs.html#lifecycle-methods) is used.

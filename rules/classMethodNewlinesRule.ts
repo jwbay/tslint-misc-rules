@@ -1,5 +1,6 @@
 import * as Lint from 'tslint/lib/lint';
 import * as ts from 'typescript';
+import getClassMethods from '../helpers/getClassMethods';
 import getLeadingWhitespace from '../helpers/getLeadingWhitespace';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -7,8 +8,6 @@ export class Rule extends Lint.Rules.AbstractRule {
 		return this.applyWithWalker(new ClassMethodNewlinesWalker(sourceFile, this.getOptions()));
 	}
 }
-
-type classType = ts.ClassDeclaration | ts.ClassExpression;
 
 class ClassMethodNewlinesWalker extends Lint.RuleWalker {
 	public visitClassDeclaration(node: ts.ClassDeclaration) {
@@ -21,8 +20,8 @@ class ClassMethodNewlinesWalker extends Lint.RuleWalker {
 		super.visitClassExpression(node);
 	}
 
-	private validate(node: classType) {
-		for (const method of this.getMethods(node)) {
+	private validate(node: ts.ClassLikeDeclaration) {
+		for (const method of getClassMethods(node)) {
 			const newlines = getLeadingWhitespace(method).match(/\n/g).length;
 			const valid = method === node.members[0]
 				? newlines === 1
@@ -39,13 +38,5 @@ class ClassMethodNewlinesWalker extends Lint.RuleWalker {
 				);
 			}
 		}
-	}
-
-	private getMethods(node: classType) {
-		if (!node.members) {
-			return [];
-		}
-
-		return node.members.filter(m => m.kind === ts.SyntaxKind.MethodDeclaration) as ts.MethodDeclaration[];
 	}
 }

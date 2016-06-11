@@ -1,0 +1,48 @@
+class Passes {
+    property: any;
+    componentWillMount() {}
+    componentWillReceiveProps() {}
+    componentDidMount() {}
+    shouldComponentUpdate() {}
+    componentWillUpdate() {}
+    componentDidUpdate() {}
+    render() {}
+    componentWillUnmount() {}
+}
+
+class PassesToo {
+    constructor() {}
+    foo() {}
+    componentWillMount() {}
+    bar() {}
+    render() {}
+    baz() {}
+}
+
+class Fails {
+    property: any;
+    componentWillMount() {}
+    render() {}
+    ~~~~~~ [expected React lifecyle method 'componentWillReceiveProps']
+    componentDidMount() {}
+    componentWillReceiveProps() {}
+    ~~~~~~~~~~~~~~~~~~~~~~~~~ [expected React lifecyle method 'shouldComponentUpdate']
+    shouldComponentUpdate() {}
+    ~~~~~~~~~~~~~~~~~~~~~ [expected React lifecyle method 'componentWillUpdate']
+    componentWillUpdate() {}
+    ~~~~~~~~~~~~~~~~~~~ [expected React lifecyle method 'componentDidUpdate']
+    componentDidUpdate() {}
+    ~~~~~~~~~~~~~~~~~~ [expected React lifecyle method 'render']
+    componentWillUnmount() {}
+}
+
+class FailsToo {
+    constructor() {}
+    foo() {}
+    render() {}
+    ~~~~~~ [expected React lifecyle method 'componentWillMount']
+    bar() {}
+    componentWillMount() {}
+    ~~~~~~~~~~~~~~~~~~ [expected React lifecyle method 'render']
+    baz() {}
+}
