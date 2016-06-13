@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "prefer-or-operator-over-ternary": true
+    },
+    "rulesDirectory": "../../rules"
+}

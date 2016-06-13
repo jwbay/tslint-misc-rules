@@ -21,7 +21,8 @@ Collection of miscellaneous TSLint rules
     "jsx-attribute-spacing": true,
     "jsx-expression-spacing": true,
     "jsx-no-braces-for-string-attributes": true,
-    "react-lifecycle-order": true
+    "react-lifecycle-order": true,
+    "prefer-or-operator-over-ternary": true
   },
   "rulesDirectory": [
     "./node_modules/tslint-misc-rules/rules"
@@ -223,3 +224,14 @@ class extends React.Component {
 ```
 
 If configuration is not specified, React's [invocation order](https://facebook.github.io/react/docs/component-specs.html#lifecycle-methods) is used.
+
+## "prefer-or-operator-over-ternary"
+Fails:
+```ts
+const maybeFoo = foo ? foo : bar;
+```
+
+Passes:
+```ts
+const maybeFoo = foo || bar;
+```
