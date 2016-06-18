@@ -1,6 +1,6 @@
 {
   "name": "tslint-misc-rules",
-  "version": "2.1.0",
+  "version": "2.3.0",
   "description": "Collection of miscellaneous TSLint rules",
   "main": "index.js",
   "scripts": {
