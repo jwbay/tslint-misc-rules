@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "no-property-initializers": true
+    },
+    "rulesDirectory": "../../rules"
+}

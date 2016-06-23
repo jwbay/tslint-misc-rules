@@ -1,0 +1,35 @@
+class passes {
+    propertyOne: any;
+
+    methodOne() {
+
+    }
+}
+
+const passesAsExpression = class {
+    propertyOne: any;
+
+    methodOne() {
+
+    }
+}
+
+class fails {
+    propertyOne = 42;
+    ~~~~~~~~~~~ [no-initializers]
+
+    methodOne = () => {
+    ~~~~~~~~~ [no-initializers]
+    }
+}
+
+const failsAsExpression = class {
+    propertyOne = 42;
+    ~~~~~~~~~~~ [no-initializers]
+
+    methodOne = () => {
+    ~~~~~~~~~ [no-initializers]
+    }
+}
+
+[no-initializers]: property initializers are nonstandard -- assign in constructor or method
