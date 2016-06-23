@@ -235,3 +235,42 @@ Passes:
 ```ts
 const maybeFoo = foo || bar;
 ```
+
+## "no-property-initializers"
+Fails:
+```ts
+class foo {
+  bar = 42;
+}
+```
+
+Passes:
+```ts
+class foo {
+  bar: number;
+}
+```
+
+## "camel-case-local-functions"
+Due to React's Stateless Functional Components, this rule checks callsites rather than declarations.  
+Fails:
+```ts
+import FooImport from 'foo';
+
+function FooDeclaration() { }
+
+FooImport();
+FooDeclaration();
+```
+
+Passes:
+```jsx
+import fooImport from 'foo';
+
+function fooDeclaration() { }
+function SomeSFC(props) { return null; }
+
+fooImport();
+fooDeclaration();
+const el = </SomeSFC>;
+```
