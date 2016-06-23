@@ -1,0 +1,29 @@
+import lowerImport from 'lower';
+import UpperImport from 'upper';
+
+function lower() { }
+function Upper() { }
+
+const aliasedUpper = Upper;
+
+const obj = {
+  lower() { },
+  Upper() { }
+};
+
+lower();
+lower(42);
+aliasedUpper();
+lowerImport();
+Upper.bind(null);
+obj.lower();
+obj.Upper();
+const jsx1 = <Upper />;
+const jsx2 = <UpperImport />;
+
+const fails1 = Upper();
+               ~~~~~ [camelcase]
+const fails2 = UpperImport();
+               ~~~~~~~~~~~ [camelcase]
+
+[camelcase]: local function names should be camelCase

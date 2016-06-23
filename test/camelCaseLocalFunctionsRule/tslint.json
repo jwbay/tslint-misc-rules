@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "camel-case-local-functions": true
+    },
+    "rulesDirectory": "../../rules"
+}
