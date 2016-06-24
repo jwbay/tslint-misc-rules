@@ -1,0 +1,72 @@
+const obj = {
+  foo: {
+    bar() {}
+  }
+}
+
+class base {
+  base() { }
+}
+
+class passes extends base {
+  one() {
+    setTimeout(() => {
+      obj.foo.bar();
+      this.two();
+    });
+  }
+
+  two() {
+    func();
+    if (Math.random() < 0.5) {
+      this.three();
+    }
+    this.base();
+    super.base();
+  }
+
+  private three() {
+  }
+
+  base() {
+    super.base();
+  }
+
+  recurse() {
+    setTimeout(() => {
+      this.recurse();
+    });
+  }
+}
+
+function func() { }
+
+class fails extends base {
+  base() {
+    super.base();
+  }
+
+  private three() {
+  }
+
+  two() {
+    func();
+    if (Math.random() < 0.5) {
+      this.three();
+      ~~~~~~~~~~ [declare-after-use]
+    }
+    this.base();
+    ~~~~~~~~~ [declare-after-use]
+    super.base();
+  }
+
+  one() {
+    setTimeout(() => {
+      obj.foo.bar();
+      this.two();
+      ~~~~~~~~ [declare-after-use]
+    });
+  }
+}
+
+[declare-after-use]: declare class methods after use

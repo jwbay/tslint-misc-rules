@@ -9,8 +9,8 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class CamelCaseFunctionsWalker extends Lint.RuleWalker {
 	public visitCallExpression(node: ts.CallExpression) {
-		if (this.isIdentifier(node.expression)) {
-			const name = node.expression as ts.Identifier;
+		const name = node.expression;
+		if (this.isIdentifier(name)) {
 			const firstLetter = name.text.charAt(0);
 			if (firstLetter !== firstLetter.toLowerCase()) {
 				this.addFailure(

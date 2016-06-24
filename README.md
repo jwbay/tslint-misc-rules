@@ -18,11 +18,14 @@ Collection of miscellaneous TSLint rules
       "module2"
     ],
     "class-method-newlines": true,
+    "declare-class-methods-after-use": true,
+    "no-property-initializers": true,
     "jsx-attribute-spacing": true,
     "jsx-expression-spacing": true,
     "jsx-no-braces-for-string-attributes": true,
     "react-lifecycle-order": true,
-    "prefer-or-operator-over-ternary": true
+    "prefer-or-operator-over-ternary": true,
+    "camel-case-local-functions": true
   },
   "rulesDirectory": [
     "./node_modules/tslint-misc-rules/rules"
@@ -273,4 +276,29 @@ function SomeSFC(props) { return null; }
 fooImport();
 fooDeclaration();
 const el = </SomeSFC>;
+```
+
+## "declare-class-methods-after-use"
+Fails:
+```ts
+class foo {
+    bar() {
+    }
+
+    foo() {
+      this.bar();
+    }
+}
+```
+
+Passes:
+```ts
+class foo {
+    foo() {
+      this.bar();
+    }
+
+    bar() {
+    }
+}
 ```

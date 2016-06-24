@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "declare-class-methods-after-use": true
+    },
+    "rulesDirectory": "../../rules"
+}
