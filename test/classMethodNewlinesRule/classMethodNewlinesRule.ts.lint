@@ -7,6 +7,10 @@ class passes {
 
     two() {
     }
+
+    //documentation
+    three() {
+    }
 }
 
 class passesWithoutProperties {
@@ -28,14 +32,28 @@ const passesAsExpression = class {
     }
 }
 
+class passesWithOverloads {
+    one();
+    one(param: any) {
+    }
+
+    /** documentation */
+    three(param: string): string;
+    /** documentation */
+    three(param: number): number;
+    three(param: string | number) {
+        return null;
+    }
+}
+
 class fails {
     propertyOne: any;
     propertyTwo: any;
     one() {
-    ~~~~~ [precededed-by-newline]
+    ~~~ [precededed-by-newline]
     }
     two() {
-    ~~~~~ [precededed-by-newline]
+    ~~~ [precededed-by-newline]
     }
 }
 
@@ -43,10 +61,10 @@ class failsWithoutProperties {
     constructor() {
     }
     one() {
-    ~~~~~ [precededed-by-newline]
+    ~~~ [precededed-by-newline]
     }
     two() {
-    ~~~~~ [precededed-by-newline]
+    ~~~ [precededed-by-newline]
     }
 }
 
@@ -54,7 +72,17 @@ const failsAsExpression = class {
     one() {
     }
     two() {
-    ~~~~~ [precededed-by-newline]
+    ~~~ [precededed-by-newline]
+    }
+}
+
+class failsWithOverloads {
+    one() {
+    }
+    two(param: string): string;
+    ~~~ [precededed-by-newline]
+    two(param: number): any {
+        return null;
     }
 }
 

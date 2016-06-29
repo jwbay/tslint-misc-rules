@@ -21,22 +21,34 @@ class ClassMethodNewlinesWalker extends Lint.RuleWalker {
 	}
 
 	private validate(node: ts.ClassLikeDeclaration) {
-		for (const method of getClassMethods(node)) {
-			const newlines = getLeadingWhitespace(method).match(/\n/g).length;
-			const valid = method === node.members[0]
-				? newlines === 1
-				: newlines === 2;
+		const sf = this.getSourceFile();
+		const methods = getClassMethods(node);
 
-			if (!valid) {
-				const methodStart = method.getStart();
+		methods.reduce((previousMethod, method) => {
+			const leadingWhitespace = getLeadingWhitespace(method);
+			const newlineCount = leadingWhitespace.match(/\n/g).length;
+			const hasComments = /\/\/|\/\*\*/g.test(leadingWhitespace);
+			const isFirstMethod = method === node.members[0];
+			const isInOverloadGroup = (
+				method !== previousMethod &&
+				method.name.getText(sf) === previousMethod.name.getText(sf)
+			);
+			const expectedNewlines = isFirstMethod || isInOverloadGroup ? 1 : 2;
+
+			if (
+				newlineCount < expectedNewlines ||
+				(newlineCount > expectedNewlines && !hasComments)
+			) {
 				this.addFailure(
 					this.createFailure(
-						methodStart,
-						method.body.getStart() - methodStart - 1,
+						method.name.getStart(sf),
+						method.name.getWidth(sf),
 						'class methods should be preceded by an empty line'
 					)
 				);
 			}
-		}
+
+			return method;
+		}, methods[0]);
 	}
 }
