@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "no-braces-for-single-line-lambda": true
+    },
+    "rulesDirectory": "../../rules"
+}
