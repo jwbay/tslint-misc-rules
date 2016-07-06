@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "no-unnecessary-parens-for-lambda-arguments": true
+    },
+    "rulesDirectory": "../../rules"
+}

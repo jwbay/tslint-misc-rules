@@ -1,0 +1,10 @@
+const ok1 = x => x;
+const ok2 = () => null;
+const ok3 = (x: number) => x;
+const ok4 = (x, y) => x + y;
+const ok5 = ({ d1 }) => d1 + d2;
+const ok6 = ({ d1 }: { d1: number}) => d1;
+const ok7 = ([d1, d2]) => d1 + d2;
+
+const fails = (x) => x;
+              ~ [lambda functions with one argument should not have parentheses around the argument]
