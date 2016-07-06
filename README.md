@@ -302,3 +302,24 @@ class foo {
     }
 }
 ```
+
+## "no-braces-for-single-line-arrow-functions"
+Fails:
+```ts
+const add = (x, y) => { return x + y };
+const btn = <button onClick={ e => { console.log(e); } } />;
+```
+Passes:
+```ts
+const add = (x, y) => x + y;
+const btn = <button onClick={ e => console.log(e) } />;
+```
+## "no-unnecessary-parens-for-arrow-function-arguments"
+Fails:
+```ts
+const log = (x) => console.log(x);
+```
+Passes:
+```ts
+const log = x => console.log(x);
+```
