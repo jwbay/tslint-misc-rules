@@ -1,6 +1,6 @@
 {
     "rules": {
-        "no-unnecessary-parens-for-lambda-arguments": true
+        "no-braces-for-single-line-arrow-functions": true
     },
     "rulesDirectory": "../../rules"
 }
