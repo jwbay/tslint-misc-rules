@@ -5,6 +5,8 @@ const ok4 = (x, y) => x + y;
 const ok5 = ({ d1 }) => d1 + d2;
 const ok6 = ({ d1 }: { d1: number}) => d1;
 const ok7 = ([d1, d2]) => d1 + d2;
+const ok8 = (...asfd: any[]) => asdf;
+const ok9 = (...qwer) => qwer;
 
 const fails = (x) => x;
               ~ [lambda functions with one argument should not have parentheses around the argument]
