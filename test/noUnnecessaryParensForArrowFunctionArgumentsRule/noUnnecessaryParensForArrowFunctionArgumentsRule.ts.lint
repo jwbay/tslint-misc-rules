@@ -1,12 +1,15 @@
-const ok1 = x => x;
-const ok2 = () => null;
-const ok3 = (x: number) => x;
-const ok4 = (x, y) => x + y;
-const ok5 = ({ d1 }) => d1 + d2;
-const ok6 = ({ d1 }: { d1: number}) => d1;
-const ok7 = ([d1, d2]) => d1 + d2;
-const ok8 = (...asfd: any[]) => asdf;
-const ok9 = (...qwer) => qwer;
+let ok: any;
+ok = x => x;
+ok = () => null;
+ok = (x: number) => x;
+ok = (x, y) => x + y;
+ok = ({ x, y }) => x + y;
+ok = ({ x: { y } }) => y;
+ok = ({ x }: { x: number}) => x;
+ok = ([x, x]) => x + y;
+ok = ([x, y]: [number, number]) => x + y;
+ok = (...x: any[]) => x;
+ok = (...x) => x;
 
 const fails = (x) => x;
               ~ [lambda functions with one argument should not have parentheses around the argument]
