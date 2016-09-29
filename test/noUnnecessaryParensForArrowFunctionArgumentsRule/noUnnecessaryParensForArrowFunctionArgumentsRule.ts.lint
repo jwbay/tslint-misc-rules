@@ -10,7 +10,11 @@ ok = ([x, x]) => x + y;
 ok = ([x, y]: [number, number]) => x + y;
 ok = (...x: any[]) => x;
 ok = (...x) => x;
+ok = (x = '') => x;
+ok = (x = 0) => x;
+ok = (x = null) => x;
 ok = (x = {}) => x;
+ok = (x = []) => x;
 
 const fails = (x) => x;
               ~ [lambda functions with one argument should not have parentheses around the argument]
