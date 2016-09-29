@@ -3,11 +3,11 @@ import * as ts from 'typescript';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
-		return this.applyWithWalker(new NoUnnecessaryParensForLambdaArgumentsWalker(sourceFile, this.getOptions()));
+		return this.applyWithWalker(new NoUnnecessaryParensForArrowFunctionArgumentsWalker(sourceFile, this.getOptions()));
 	}
 }
 
-class NoUnnecessaryParensForLambdaArgumentsWalker extends Lint.RuleWalker {
+class NoUnnecessaryParensForArrowFunctionArgumentsWalker extends Lint.RuleWalker {
 	protected visitArrowFunction(node: ts.ArrowFunction) {
 		super.visitArrowFunction(node);
 		if (node.parameters.length !== 1) {
@@ -26,7 +26,7 @@ class NoUnnecessaryParensForLambdaArgumentsWalker extends Lint.RuleWalker {
 				this.createFailure(
 					node.getStart(this.getSourceFile()),
 					1,
-					'lambda functions with one argument should not have parentheses around the argument'
+					'arrow functions with one argument should not have parentheses around the argument'
 				)
 			);
 		}

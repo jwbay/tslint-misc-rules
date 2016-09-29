@@ -3,11 +3,11 @@ import * as ts from 'typescript';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
-		return this.applyWithWalker(new NoBracesForSingleLineLambdaWalker(sourceFile, this.getOptions()));
+		return this.applyWithWalker(new NoBracesForSingleLineArrowFunctionsWalker(sourceFile, this.getOptions()));
 	}
 }
 
-class NoBracesForSingleLineLambdaWalker extends Lint.RuleWalker {
+class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 	protected visitArrowFunction(node: ts.ArrowFunction) {
 		super.visitArrowFunction(node);
 		const { body } = node;
@@ -17,7 +17,7 @@ class NoBracesForSingleLineLambdaWalker extends Lint.RuleWalker {
 				this.createFailure(
 					body.getStart(this.getSourceFile()),
 					1,
-					'single-line lambdas should not be wrapped in braces'
+					'single-line arrow functions should not be wrapped in braces'
 				)
 			);
 		}

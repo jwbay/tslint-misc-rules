@@ -23,4 +23,4 @@ const fails3 = (x, y) => { return x + y };
 const fails4 = <button onClick={ e => { console.log(e); } } />;
                                       ~ [no-braces]
 
-[no-braces]: single-line lambdas should not be wrapped in braces
+[no-braces]: single-line arrow functions should not be wrapped in braces
