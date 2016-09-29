@@ -50,6 +50,6 @@ class NoUnnecessaryParensForLambdaArgumentsWalker extends Lint.RuleWalker {
 	}
 
 	private hasDefaultValue(param: ts.ParameterDeclaration) {
-		return param.getText(this.getSourceFile()).indexOf('=') !== -1;
+		return !!param.initializer;
 	}
 }
