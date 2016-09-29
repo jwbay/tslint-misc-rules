@@ -19,8 +19,9 @@ class NoUnnecessaryParensForLambdaArgumentsWalker extends Lint.RuleWalker {
 		const hasType = this.hasTypeAnnotation(param);
 		const isDestructured = this.isDestructured(param);
 		const isRest = this.isRestParameter(param);
+		const hasDefaultValue = this.hasDefaultValue(param);
 
-		if (hasParens && !(hasType || isDestructured || isRest)) {
+		if (hasParens && !(hasType || isDestructured || isRest || hasDefaultValue)) {
 			this.addFailure(
 				this.createFailure(
 					node.getStart(this.getSourceFile()),
@@ -46,5 +47,9 @@ class NoUnnecessaryParensForLambdaArgumentsWalker extends Lint.RuleWalker {
 
 	private isRestParameter(param: ts.ParameterDeclaration) {
 		return !!param.dotDotDotToken;
+	}
+
+	private hasDefaultValue(param: ts.ParameterDeclaration) {
+		return param.getText(this.getSourceFile()).indexOf('=') !== -1;
 	}
 }
