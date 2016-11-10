@@ -13,14 +13,14 @@ class foo {
     return null;
   };
   public fails1 = x => { return null; };
-                       ~ [no-braces]
+                       ~~~~~~~~~~~~~~~~ [no-braces]
 }
 
 const fails2 = x => { return null; };
-                    ~ [no-braces]
+                    ~~~~~~~~~~~~~~~~ [no-braces]
 const fails3 = (x, y) => { return x + y };
-                         ~ [no-braces]
+                         ~~~~~~~~~~~~~~~~ [no-braces]
 const fails4 = <button onClick={ e => { console.log(e); } } />;
-                                      ~ [no-braces]
+                                      ~~~~~~~~~~~~~~~~~~~ [no-braces]
 
 [no-braces]: single-line arrow functions should not be wrapped in braces
