@@ -13,11 +13,17 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 		const { body } = node;
 
 		if (this.functionBodyIsBraced(body) && this.functionBodyIsOneLine(body)) {
+			const failureStart = body.getStart(this.getSourceFile());
+			const text = body.getChildAt(1).getText().replace('return', '').replace(';', '').trim();
+			const fix = new Lint.Fix('no-braces-for-single-line-arrow-functions', [
+				this.appendText(failureStart, text)
+			]);
 			this.addFailure(
 				this.createFailure(
-					body.getStart(this.getSourceFile()),
-					1,
-					'single-line arrow functions should not be wrapped in braces'
+					failureStart,
+					body.getWidth(),
+					'single-line arrow functions should not be wrapped in braces',
+					fix
 				)
 			);
 		}

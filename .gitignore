@@ -1,8 +1,6 @@
 *.js
 *.js.map
 *.log
-.vscode/*.json
 node_modules
 typings
 !test/runner.js
-!.vscode/launch.json
