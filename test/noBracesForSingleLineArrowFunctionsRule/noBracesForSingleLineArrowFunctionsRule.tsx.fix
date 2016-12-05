@@ -1,0 +1,21 @@
+const ok1 = x => null;
+const ok2 = (x, y) => x + y;
+const ok3 = x => {
+  return null;
+};
+const ok4 = <button onClick={ e => console.log(e) } />;
+const ok5 = <button onClick={ e => {
+  console.log(e);
+} } />;
+class foo {
+  public ok6 = x => null;
+  public ok7 = x => {
+    return null;
+  };
+  public fails1 = x => null;
+}
+
+const fails2 = x => null;
+const fails3 = (x, y) => x + y;
+const fails4 = <button onClick={ e => console.log(e) } />;
+
