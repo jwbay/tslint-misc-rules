@@ -19,7 +19,7 @@ Collection of miscellaneous TSLint rules
 }
 ```
 
-# <span name="TOC">Rules</span>
+# <a name="TOC"></a>Rules
 
 1. [sort-imports](#1)
 1. [prefer-es6-imports](#2)
@@ -36,7 +36,7 @@ Collection of miscellaneous TSLint rules
 1. [no-braces-for-single-line-arrow-functions](#13)
 1. [no-unnecessary-parens-for-arrow-function-arguments](#14)
 
-## <span name="1">"sort-imports"</span> [↑](#TOC) 
+## <a name="1"></a>"sort-imports" [↑](#TOC) 
 Fails:
 ```ts
 import b from "b";
@@ -62,7 +62,7 @@ import { b, c } from "bc";
 import d from "d";
 ```
 
-## <span name="2">"prefer-es6-imports"</span> [↑](#TOC)
+## <a name="2"></a>"prefer-es6-imports" [↑](#TOC)
 With configuration (required):
 ```json
 {
@@ -79,7 +79,7 @@ import mod = require("path/to/module-name");
 import mod = require("../module-name");
 ```
 
-## <span name="3">"class-method-newlines"</span> [↑](#TOC)
+## <a name="3"></a>"class-method-newlines" [↑](#TOC)
 Ensure each method in class is preceded by a newline.  
 
 Fails:
@@ -120,7 +120,7 @@ class foo {
 ```
 
 
-## <span name="4">"jsx-attribute-spacing"</span> [↑](#TOC)
+## <a name="4"></a>"jsx-attribute-spacing" [↑](#TOC)
 Fails:
 ```jsx
 <div prop = { value }/>
@@ -132,7 +132,7 @@ Passes:
 <div prop={ value }/>
 ```
 
-## <span name="5">"jsx-expression-spacing"</span> [↑](#TOC)
+## <a name="5"></a>"jsx-expression-spacing" [↑](#TOC)
 Fails:
 ```jsx
 <div prop={value}/>
@@ -152,7 +152,7 @@ Passes:
 </div>
 ```
 
-## <span name="6">"jsx-no-closing-bracket-newline"</span> [↑](#TOC)
+## <a name="6"></a>"jsx-no-closing-bracket-newline" [↑](#TOC)
 Fails:
 ```jsx
   <a className="asdf"
@@ -179,7 +179,7 @@ Passes:
   </div>
 ```
 
-## <span name="7">"jsx-no-braces-for-string-attributes"</span> [↑](#TOC)
+## <a name="7"></a>"jsx-no-braces-for-string-attributes" [↑](#TOC)
 Fails:
 ```jsx
 <div prop={ "value" }/>
@@ -189,7 +189,7 @@ Passes:
 <div prop="value"/>
 ```
 
-## <span name="8">"react-lifecycle-order"</span> [↑](#TOC)
+## <a name="8"></a>"react-lifecycle-order" [↑](#TOC)
 With configuration (optional):
 ```json
 {
@@ -231,7 +231,7 @@ class extends React.Component {
 
 If configuration is not specified, React's [invocation order](https://facebook.github.io/react/docs/component-specs.html#lifecycle-methods) is used.
 
-## <span name="9">"prefer-or-operator-over-ternary"</span> [↑](#TOC)
+## <a name="9"></a>"prefer-or-operator-over-ternary" [↑](#TOC)
 Fails:
 ```ts
 const maybeFoo = foo ? foo : bar;
@@ -242,7 +242,7 @@ Passes:
 const maybeFoo = foo || bar;
 ```
 
-## <span name="10">"no-property-initializers"</span> [↑](#TOC)
+## <a name="10"></a>"no-property-initializers" [↑](#TOC)
 Fails:
 ```ts
 class foo {
@@ -257,7 +257,7 @@ class foo {
 }
 ```
 
-## <span name="11">"camel-case-local-functions"</span> [↑](#TOC)
+## <a name="11"></a>"camel-case-local-functions" [↑](#TOC)
 Due to React's Stateless Functional Components, this rule checks callsites rather than declarations.  
 Fails:
 ```ts
@@ -281,7 +281,7 @@ fooDeclaration();
 const el = </SomeSFC>;
 ```
 
-## <span name="12">"declare-class-methods-after-use"</span> [↑](#TOC)
+## <a name="12"></a>"declare-class-methods-after-use" [↑](#TOC)
 Fails:
 ```ts
 class foo {
@@ -306,7 +306,7 @@ class foo {
 }
 ```
 
-## <span name="13">"no-braces-for-single-line-arrow-functions"</span> [↑](#TOC)
+## <a name="13"></a>"no-braces-for-single-line-arrow-functions" [↑](#TOC)
 This rule supports autofixing.
 
 Fails:
@@ -320,7 +320,7 @@ const add = (x, y) => x + y;
 const btn = <button onClick={ e => console.log(e) } />;
 ```
 
-## <span name="14">"no-unnecessary-parens-for-arrow-function-arguments"</span> [↑](#TOC)
+## <a name="14"></a>"no-unnecessary-parens-for-arrow-function-arguments" [↑](#TOC)
 Fails:
 ```ts
 const log = (x) => console.log(x);
