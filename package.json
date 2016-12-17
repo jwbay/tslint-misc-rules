@@ -29,11 +29,11 @@
   },
   "homepage": "https://github.com/jwbay/tslint-misc-rules#readme",
   "dependencies": {
-    "tslint": "^3.15.1",
+    "tslint": "^4.1.1",
     "typescript": ">=1.8 <2.2"
   },
   "devDependencies": {
-    "tslint-eslint-rules": "^1.5.0",
-    "tslint-microsoft-contrib": "^2.0.10"
+    "tslint-eslint-rules": "^3.2.0",
+    "tslint-microsoft-contrib": "^4.0.0"
   }
 }
