@@ -1,4 +1,4 @@
-import * as Lint from 'tslint/lib/lint';
+import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
 
 export class Rule extends Lint.Rules.AbstractRule {
@@ -42,8 +42,7 @@ class NoUnnecessaryParensForArrowFunctionArgumentsWalker extends Lint.RuleWalker
 
 	private isDestructured(param: ts.ParameterDeclaration) {
 		return param.name.kind === ts.SyntaxKind.ObjectBindingPattern ||
-			param.name.kind === ts.SyntaxKind.ArrayBindingPattern ||
-			param.name.kind === ts.SyntaxKind.BindingElement;
+			param.name.kind === ts.SyntaxKind.ArrayBindingPattern;
 	}
 
 	private isRestParameter(param: ts.ParameterDeclaration) {
