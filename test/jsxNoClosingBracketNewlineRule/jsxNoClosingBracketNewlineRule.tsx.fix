@@ -14,22 +14,15 @@ const passes = (
 
 const fails = (
     <div>
-        <span className={ value }
-        />
-        ~ [no-newline]
+        <span className={ value }/>
         <a className="asdf"
             href="/foo"
-            id="123" /
-        >
-        ~ [no-newline]
+            id="123" />
         <div
             className="qwer"
-            id="asdf"
-        >
-        ~ [no-newline]
+            id="asdf">
             text
         </div>
     </div>
 );
 
-[no-newline]: closing brackets for jsx elements should not be on newlines
