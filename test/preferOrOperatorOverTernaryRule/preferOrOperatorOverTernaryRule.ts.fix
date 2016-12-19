@@ -2,12 +2,10 @@ const foo = 42;
 const bar = 43;
 const getFoo = () => foo;
 
-const fails = foo ? foo : bar;
-                    ~~~ [prefer-or]
+const fails = foo || bar;
 
 const passesOne = getFoo ? getFoo() : bar;
 const passesTwo = foo ? foo + 1 : bar;
 const passesThree = foo || bar;
 const passesFour = foo === 0 ? foo : bar;
 
-[prefer-or]: use '||' when first and second operands of ternary are identical
