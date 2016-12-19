@@ -49,41 +49,40 @@ class passesWithOverloads {
 class fails {
     propertyOne: any;
     propertyTwo: any;
+
     one() {
-    ~~~ [precededed-by-newline]
     }
+
     two() {
-    ~~~ [precededed-by-newline]
     }
 }
 
 class failsWithoutProperties {
     constructor() {
     }
+
     one() {
-    ~~~ [precededed-by-newline]
     }
+
     two() {
-    ~~~ [precededed-by-newline]
     }
 }
 
 const failsAsExpression = class {
     one() {
     }
+
     two() {
-    ~~~ [precededed-by-newline]
     }
 }
 
 class failsWithOverloads {
     one() {
     }
+
     two(param: string): string;
-    ~~~ [precededed-by-newline]
     two(param: number): any {
         return null;
     }
 }
 
-[precededed-by-newline]: class methods should be preceded by an empty line
