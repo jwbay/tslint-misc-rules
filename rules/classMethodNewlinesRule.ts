@@ -39,11 +39,18 @@ class ClassMethodNewlinesWalker extends Lint.RuleWalker {
 				newlineCount < expectedNewlines ||
 				(newlineCount > expectedNewlines && !hasComments)
 			) {
+				const newLine = leadingWhitespace.match('\r\n') ? '\r\n' : '\n';
+				const start = method.name.getStart(sf);
+				const width = method.name.getWidth(sf);
+				const fix = new Lint.Fix('class-method-newlines', [
+					this.appendText(start - leadingWhitespace.length, newLine)
+				]);
 				this.addFailure(
 					this.createFailure(
-						method.name.getStart(sf),
-						method.name.getWidth(sf),
-						'class methods should be preceded by an empty line'
+						start,
+						width,
+						'class methods should be preceded by an empty line',
+						fix
 					)
 				);
 			}
