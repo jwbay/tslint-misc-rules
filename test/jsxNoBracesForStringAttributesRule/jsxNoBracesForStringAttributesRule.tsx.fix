@@ -1,0 +1,13 @@
+const value = "value";
+
+const z = (
+    <div>
+        <span className='bar' />
+        <span className='bar' />
+        <a id="123" 
+              className="bar"
+              href="/foo"/>
+        <span className="bar" />
+        <span className={ value } />
+    </div>
+);

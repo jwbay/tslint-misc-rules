@@ -31,11 +31,15 @@ class JsxNoBracesForStringAttributesWalker extends Lint.RuleWalker {
 			const closeBrace = initializer.getChildAt(2);
 
 			if (this.isStringLiteral(value) && this.isClosingBrace(closeBrace)) {
+				const fix = new Lint.Fix('jsx-no-braces-for-string-attributes', [
+					this.createReplacement(initializer.getStart(), closeBrace.getStart() + 1 - initializer.getStart(), value.getText())
+				]);
 				this.addFailure(
 					this.createFailure(
 						attribute.getStart(),
 						attribute.getWidth(),
-						`jsx attribute '${name.getText()}' should not have braces around string prop ${value.getText()}`
+						`jsx attribute '${name.getText()}' should not have braces around string prop ${value.getText()}`,
+						fix
 					)
 				);
 			}
