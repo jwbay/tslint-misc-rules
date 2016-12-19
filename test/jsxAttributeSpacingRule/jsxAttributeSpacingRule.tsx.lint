@@ -8,16 +8,18 @@ const passes = (
 const fails = (
     <div>
         <span className = 'bar' />
-              ~~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+              ~~~~~~~~~~~~~~~~~  [whitespace]
         <span className= 'bar' />
-              ~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+              ~~~~~~~~~~~~~~~~  [whitespace]
         <span className ='bar' />
-              ~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+              ~~~~~~~~~~~~~~~~  [whitespace]
         <span className = { value } />
-              ~~~~~~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+              ~~~~~~~~~~~~~~~~~~~~~  [whitespace]
         <span className= { value } />
-              ~~~~~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+              ~~~~~~~~~~~~~~~~~~~~  [whitespace]
         <span className ={ value } />
-              ~~~~~~~~~~~~~~~~~~~~  [jsx attribute 'className' should not have whitespace around '=']
+              ~~~~~~~~~~~~~~~~~~~~  [whitespace]
     </div>
 );
+
+[whitespace]: jsx attribute 'className' should not have whitespace around '='

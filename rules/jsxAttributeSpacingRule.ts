@@ -31,11 +31,18 @@ class JsxAttributeSpacingWalker extends Lint.RuleWalker {
 				assignment.getStart() !== assignment.getFullStart() ||
 				initializer.getStart() !== initializer.getFullStart()
 			) {
+				const start = attribute.getStart();
+				const width = attribute.getWidth();
+				const fix = new Lint.Fix('jsx-attribute-spacing', [
+					this.deleteText(assignment.getFullStart(), assignment.getStart() - assignment.getFullStart()),
+					this.deleteText(initializer.getFullStart(), initializer.getStart() - initializer.getFullStart())
+				]);
 				this.addFailure(
 					this.createFailure(
-						attribute.getStart(),
-						attribute.getWidth(),
-						`jsx attribute '${identifier.getText()}' should not have whitespace around '='`
+						start,
+						width,
+						`jsx attribute '${identifier.getText()}' should not have whitespace around '='`,
+						fix
 					)
 				);
 			}
