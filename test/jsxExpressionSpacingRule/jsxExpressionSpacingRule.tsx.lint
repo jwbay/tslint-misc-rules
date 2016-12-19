@@ -7,20 +7,24 @@ const passes = (
 
 const fails = (
     <div>
-        <span className={'bar' } />
+        <span className={'missingOpeningSpace' } />
                          ~  [no-opening-space]
-        <span className={ 'bar'} />
-                               ~  [no-closing-space]
-        <span className={'bar'} />
+        <span className={ 'missingClosingSpace'} />
+                                               ~  [no-closing-space]
+        <span className={'missingOpeningAndClosingSpace'} />
                          ~  [no-opening-space]
-                              ~  [no-closing-space]
-        {value }
+                                                        ~  [no-closing-space]
+        {missingOpeningSpace }
          ~  [no-opening-space]
-        { value}
-               ~  [no-closing-space]
-        {value}
-              ~  [no-closing-space]
+        { missingClosingSpace}
+                             ~  [no-closing-space]
+        {missingOpeningAndClosingSpace}
+                                      ~  [no-closing-space]
          ~  [no-opening-space]
+        {  extraLeadingSpace }
+         ~ [no-opening-space]
+        { extraTrailingSpace  }
+                              ~ [no-closing-space]
     </div>
 );
 

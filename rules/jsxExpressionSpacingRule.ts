@@ -16,21 +16,10 @@ class JsxExpressionSpacingWalker extends Lint.RuleWalker {
 	}
 
 	private validateNode(node: ts.JsxExpression) {
-		const value = node.getChildAt(1);
-		const closingBrace = node.getChildAt(2);
+		const [ , value, closingBrace ] = node.getChildren();
 
 		if (!value || !this.isClosingBrace(closingBrace)) {
 			return;
-		}
-
-		if (!this.isPrecededByValidWhitespace(value)) {
-			this.addFailure(
-				this.createFailure(
-					node.getStart() + 1,
-					1,
-					'jsx expression should have one space after opening \'{\''
-				)
-			);
 		}
 
 		if (!this.isPrecededByValidWhitespace(closingBrace)) {
@@ -38,7 +27,23 @@ class JsxExpressionSpacingWalker extends Lint.RuleWalker {
 				this.createFailure(
 					closingBrace.getStart(),
 					1,
-					'jsx expression should have one space before closing \'}\''
+					'jsx expression should have one space before closing \'}\'',
+					new Lint.Fix('jsx-expression-spacing', [
+						this.createReplacement(value.getEnd(), closingBrace.getStart() - value.getEnd(), ' ')
+					])
+				)
+			);
+		}
+
+		if (!this.isPrecededByValidWhitespace(value)) {
+			this.addFailure(
+				this.createFailure(
+					node.getStart() + 1,
+					1,
+					'jsx expression should have one space after opening \'{\'',
+					new Lint.Fix('jsx-expression-spacing', [
+						this.createReplacement(node.getStart() + 1, value.getFullWidth(), ' ' + value.getText())
+					])
 				)
 			);
 		}

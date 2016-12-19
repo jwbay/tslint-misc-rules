@@ -1,0 +1,20 @@
+const passes = (
+    <div>
+        <span className={ value } />
+        { value }
+    </div>
+);
+
+const fails = (
+    <div>
+        <span className={ 'missingOpeningSpace' } />
+        <span className={ 'missingClosingSpace' } />
+        <span className={ 'missingOpeningAndClosingSpace' } />
+        { missingOpeningSpace }
+        { missingClosingSpace }
+        { missingOpeningAndClosingSpace }
+        { extraLeadingSpace }
+        { extraTrailingSpace }
+    </div>
+);
+
