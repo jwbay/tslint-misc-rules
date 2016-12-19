@@ -21,19 +21,21 @@ Collection of miscellaneous TSLint rules
 
 # <a name="TOC"></a>Rules
 
+Rules with * support autofixing.
+
 1. [sort-imports](#1)
 1. [prefer-es6-imports](#2)
-1. [class-method-newlines](#3)
-1. [jsx-attribute-spacing](#4)
-1. [jsx-expression-spacing](#5)
-1. [jsx-no-closing-bracket-newline](#6)
-1. [jsx-no-braces-for-string-attributes](#7)
+1. [class-method-newlines](#3) *
+1. [jsx-attribute-spacing](#4) *
+1. [jsx-expression-spacing](#5) *
+1. [jsx-no-closing-bracket-newline](#6) *
+1. [jsx-no-braces-for-string-attributes](#7) *
 1. [react-lifecycle-order](#8)
-1. [prefer-or-operator-over-ternary](#9)
+1. [prefer-or-operator-over-ternary](#9) *
 1. [no-property-initializers](#10)
 1. [camel-case-local-function](#11)
 1. [declare-class-methods-after-use](#12)
-1. [no-braces-for-single-line-arrow-functions](#13)
+1. [no-braces-for-single-line-arrow-functions](#13) *
 1. [no-unnecessary-parens-for-arrow-function-arguments](#14)
 
 ## <a name="1"></a>"sort-imports" [↑](#TOC) 
@@ -80,7 +82,7 @@ import mod = require("../module-name");
 ```
 
 ## <a name="3"></a>"class-method-newlines" [↑](#TOC)
-Ensure each method in class is preceded by a newline.  
+Ensure each method in class is preceded by a newline.
 
 Fails:
 ```ts
@@ -307,7 +309,6 @@ class foo {
 ```
 
 ## <a name="13"></a>"no-braces-for-single-line-arrow-functions" [↑](#TOC)
-This rule supports autofixing.
 
 Fails:
 ```ts
