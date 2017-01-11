@@ -12,7 +12,11 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 		super.visitArrowFunction(node);
 		const { body } = node;
 
-		if (this.functionBodyIsBraced(body) && this.functionBodyIsOneLine(body)) {
+		if (
+			this.functionBodyIsBraced(body) &&
+			this.functionBodyHasContent(body) &&
+			this.functionBodyIsOneLine(body)
+		) {
 			const failureStart = body.getStart(this.getSourceFile());
 			const text = body.getChildAt(1).getText().replace('return', '').replace(';', '').trim();
 			const fix = new Lint.Fix('no-braces-for-single-line-arrow-functions', [
@@ -31,6 +35,10 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 
 	private functionBodyIsBraced(node: ts.ConciseBody): node is ts.Block {
 		return node && node.kind === ts.SyntaxKind.Block;
+	}
+
+	private functionBodyHasContent(node: ts.Block) {
+		return node.statements.length > 0;
 	}
 
 	private functionBodyIsOneLine(node: ts.Block) {
