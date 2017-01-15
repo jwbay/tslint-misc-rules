@@ -8,6 +8,7 @@ const ok5 = <button onClick={ e => {
   console.log(e);
 } } />;
 const ok6 = () => {};
+const ok7 = () => { statement1; statement2; };
 class foo {
   public ok6 = x => null;
   public ok7 = x => {

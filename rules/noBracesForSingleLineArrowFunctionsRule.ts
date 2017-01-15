@@ -14,7 +14,7 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 
 		if (
 			this.functionBodyIsBraced(body) &&
-			this.functionBodyHasContent(body) &&
+			this.functionBodyHasOneStatement(body) &&
 			this.functionBodyIsOneLine(body)
 		) {
 			const failureStart = body.getStart(this.getSourceFile());
@@ -37,8 +37,8 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 		return node && node.kind === ts.SyntaxKind.Block;
 	}
 
-	private functionBodyHasContent(node: ts.Block) {
-		return node.statements.length > 0;
+	private functionBodyHasOneStatement(node: ts.Block) {
+		return node.statements.length === 1;
 	}
 
 	private functionBodyIsOneLine(node: ts.Block) {
