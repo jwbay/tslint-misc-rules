@@ -20,6 +20,13 @@ obj.lower();
 obj.Upper();
 const jsx1 = <Upper />;
 const jsx2 = <UpperImport />;
+Number('42');
+String(42);
+Boolean(0);
+Array(1, 2, 3);
+Object({ x: 42 });
+Function('return 42');
+Error('boom');
 
 const fails1 = Upper();
                ~~~~~ [camelcase]

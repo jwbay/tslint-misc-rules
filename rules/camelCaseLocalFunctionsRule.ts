@@ -1,5 +1,6 @@
 import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
+import nodeIsKind from '../helpers/nodeIsKind';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
@@ -10,9 +11,9 @@ export class Rule extends Lint.Rules.AbstractRule {
 class CamelCaseFunctionsWalker extends Lint.RuleWalker {
 	public visitCallExpression(node: ts.CallExpression) {
 		const name = node.expression;
-		if (this.isIdentifier(name)) {
+		if (nodeIsKind<ts.Identifier>(name, k => k.Identifier)) {
 			const firstLetter = name.text.charAt(0);
-			if (firstLetter !== firstLetter.toLowerCase()) {
+			if (firstLetter !== firstLetter.toLowerCase() && !this.isInWhitelist(name.text)) {
 				this.addFailure(
 					this.createFailure(
 						name.getStart(this.getSourceFile()),
@@ -26,7 +27,15 @@ class CamelCaseFunctionsWalker extends Lint.RuleWalker {
 		super.visitCallExpression(node);
 	}
 
-	private isIdentifier(node: ts.Node): node is ts.Identifier {
-		return node.kind === ts.SyntaxKind.Identifier;
+	private isInWhitelist(name: string) {
+		return [
+			'Array',
+			'Boolean',
+			'Error',
+			'Function',
+			'Number',
+			'Object',
+			'String'
+		].indexOf(name) > -1;
 	}
 }
