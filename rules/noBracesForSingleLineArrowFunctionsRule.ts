@@ -1,5 +1,6 @@
 import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
+import nodeIsKind from '../helpers/nodeIsKind';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
@@ -34,7 +35,7 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 	}
 
 	private functionBodyIsBraced(node: ts.ConciseBody): node is ts.Block {
-		return node && node.kind === ts.SyntaxKind.Block;
+		return nodeIsKind(node, k => k.Block);
 	}
 
 	private functionBodyHasOneStatement(node: ts.Block) {
@@ -50,12 +51,13 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 		const sf = this.getSourceFile();
 		const body = node.getChildAt(1, sf);
 		let result = this.stripSemicolon(body.getText(sf));
+
 		const statement = body.getChildAt(0, sf);
-		if (statement && statement.kind === ts.SyntaxKind.ReturnStatement) {
+		if (nodeIsKind(statement, k => k.ReturnStatement)) {
 			result = result.replace('return', '').trim();
 
 			const returnExpression = statement.getChildAt(1, sf);
-			if (returnExpression && returnExpression.kind === ts.SyntaxKind.ObjectLiteralExpression) {
+			if (nodeIsKind(returnExpression, k => k.ObjectLiteralExpression)) {
 				result = `(${result})`;
 			}
 		}
