@@ -24,3 +24,4 @@ const fails6 = () => foo(returnX(42));
 const fails7 = () => ({});
 const fails8 = () => ({ x: 42 });
 const fails9 = () => 'semi;colon';
+const fails10 = () => returnX;

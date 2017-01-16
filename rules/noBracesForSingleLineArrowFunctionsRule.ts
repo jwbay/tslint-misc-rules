@@ -47,13 +47,14 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 	}
 
 	private getFixedText(node: ts.Block) {
-		const body = node.getChildAt(1);
-		const statement = body.getChildAt(0);
-		let result = this.stripSemicolon(body.getText(this.getSourceFile()));
+		const sf = this.getSourceFile();
+		const body = node.getChildAt(1, sf);
+		let result = this.stripSemicolon(body.getText(sf));
+		const statement = body.getChildAt(0, sf);
 		if (statement && statement.kind === ts.SyntaxKind.ReturnStatement) {
 			result = result.replace('return', '').trim();
 
-			const returnExpression = statement.getChildAt(1);
+			const returnExpression = statement.getChildAt(1, sf);
 			if (returnExpression && returnExpression.kind === ts.SyntaxKind.ObjectLiteralExpression) {
 				result = `(${result})`;
 			}
@@ -63,10 +64,6 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 	}
 
 	private stripSemicolon(text: string) {
-		let result = text.trim();
-		if (result.match(/;$/)) {
-			result = result.slice(0, text.length - 1);
-		}
-		return result;
+		return text.trim().replace(/;$/, '');
 	}
 }

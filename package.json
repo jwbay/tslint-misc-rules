@@ -6,11 +6,9 @@
   "scripts": {
     "build": "tsc --inlineSourceMap",
     "lint": "tslint rules/*.ts helpers/*.ts",
-    "pretest": "npm run build",
     "test": "node test/runner.js",
-    "ci": "npm run lint && npm run test",
-    "watch": "tsc --watch & node test/watch",
-    "prepublish": "npm run ci"
+    "ci": "npm run build && npm run lint && npm run test",
+    "watch": "tsc --watch & node test/watch"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,7 @@
 var chokidar = require('chokidar');
 var execSync = require('child_process').execSync;
 var path = require('path');
+
 chokidar.watch('rules/*.js', { ignoreInitial: true })
     .on('change', file => handleSourceChange(file))
     .on('add', file => handleSourceChange(file));

@@ -32,4 +32,6 @@ const fails8 = () => { return { x: 42 }; };
                      ~~~~~~~~~~~~~~~~~~~~~ [no-braces]
 const fails9 = () => { return 'semi;colon'; };
                      ~~~~~~~~~~~~~~~~~~~~~~~~ [no-braces]
+const fails10 = () => { return returnX; };
+                      ~~~~~~~~~~~~~~~~~~~ [no-braces]
 [no-braces]: single-line arrow functions should not be wrapped in braces
