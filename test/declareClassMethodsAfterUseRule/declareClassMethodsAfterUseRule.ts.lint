@@ -37,6 +37,23 @@ class passes extends base {
       this.recurse();
     });
   }
+
+  foo() {
+    this.bar();
+  }
+
+  bar() {
+  }
+
+  foo2() {
+    this.bar();
+  }
+
+  wat = () => {
+    this.baz();
+  }
+
+  baz = () => {}
 }
 
 function func() { }
@@ -66,6 +83,26 @@ class fails extends base {
       this.two();
       ~~~~~~~~ [declare-after-use]
     });
+  }
+
+  bar() {
+  }
+
+  foo() {
+    this.bar();
+    ~~~~~~~~ [declare-after-use]
+  }
+
+  foo2() {
+    this.bar();
+    ~~~~~~~~ [declare-after-use]
+  }
+
+  baz = () => {}
+
+  wat = () => {
+    this.baz();
+    ~~~~~~~~ [declare-after-use]
   }
 }
 

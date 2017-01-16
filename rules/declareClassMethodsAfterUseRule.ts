@@ -11,7 +11,8 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class DeclareClassMethodsAfterUseWalker extends Lint.RuleWalker {
 	private currentMethodName: string;
-	private visitedMethodNames: string[];
+	private visitedMethodDeclarations: string[];
+	private visitedMethodCalls: string[];
 
 	public visitClassDeclaration(node: ts.ClassDeclaration) {
 		this.validate(node);
@@ -24,11 +25,12 @@ class DeclareClassMethodsAfterUseWalker extends Lint.RuleWalker {
 	}
 
 	private validate(node: ts.ClassLikeDeclaration) {
-		this.visitedMethodNames = [];
+		this.visitedMethodDeclarations = [];
+		this.visitedMethodCalls = [];
 
 		for (const method of getClassMethods(node)) {
 			this.currentMethodName = method.name.getText(this.getSourceFile());
-			this.visitedMethodNames.push(this.currentMethodName);
+			this.visitedMethodDeclarations.push(this.currentMethodName);
 			ts.forEachChild(method, child => {
 				this.visitChildren(child);
 			});
@@ -51,27 +53,37 @@ class DeclareClassMethodsAfterUseWalker extends Lint.RuleWalker {
 		const propertyExpression = node.expression as ts.PropertyAccessExpression;
 		const methodName = propertyExpression.name.text;
 
-		if (this.haveVisitedMethod(methodName) && !this.isRecursion(methodName)) {
-			this.addFailure(
-				this.createFailure(
-					propertyExpression.getStart(this.getSourceFile()),
-					propertyExpression.getWidth(this.getSourceFile()),
-					'declare class methods after use'
-				)
-			);
+		if (this.methodHasBeenDeclared(methodName)) {
+			if (!this.isRecursion(methodName) && !this.methodHasBeenCalled(methodName)) {
+				this.addFailure(
+					this.createFailure(
+						propertyExpression.getStart(this.getSourceFile()),
+						propertyExpression.getWidth(this.getSourceFile()),
+						'declare class methods after use'
+					)
+				);
+			}
+		} else {
+			// declaration needs to come after first use, not all uses.
+			// once we've seen a callsite before a declaration, don't
+			// error on any future callsites for that method
+			this.visitedMethodCalls.push(methodName);
 		}
 	}
 
 	private callExpressionBelongsToThis(node: ts.Expression) {
 		return (
-			node &&
-			node.kind === ts.SyntaxKind.PropertyAccessExpression &&
-			(node as ts.PropertyAccessExpression).expression.kind === ts.SyntaxKind.ThisKeyword
+			nodeIsKind<ts.PropertyAccessExpression>(node, k => k.PropertyAccessExpression) &&
+			nodeIsKind(node.expression, k => k.ThisKeyword)
 		);
 	}
 
-	private haveVisitedMethod(name: string) {
-		return this.visitedMethodNames.indexOf(name) > -1;
+	private methodHasBeenDeclared(name: string) {
+		return this.visitedMethodDeclarations.indexOf(name) > -1;
+	}
+
+	private methodHasBeenCalled(name: string) {
+		return this.visitedMethodCalls.indexOf(name) > -1;
 	}
 
 	private isRecursion(name: string) {
