@@ -19,29 +19,30 @@ class JsxAttributeSpacingWalker extends Lint.RuleWalker {
 	}
 
 	private validateAttributes(nodes: ts.JsxAttribute[]) {
+		const sf = this.getSourceFile();
 		const nonSpreadAttributes = nodes.filter(n => n.kind === ts.SyntaxKind.JsxAttribute);
 
 		for (const attribute of nonSpreadAttributes) {
-			const [identifier, assignment, initializer] = attribute.getChildren();
+			const [identifier, assignment, initializer] = attribute.getChildren(sf);
 			if (!initializer) {
 				continue;
 			}
 
 			if (
-				assignment.getStart() !== assignment.getFullStart() ||
-				initializer.getStart() !== initializer.getFullStart()
+				assignment.getStart(sf) !== assignment.getFullStart() ||
+				initializer.getStart(sf) !== initializer.getFullStart()
 			) {
-				const start = attribute.getStart();
-				const width = attribute.getWidth();
+				const start = attribute.getStart(sf);
+				const width = attribute.getWidth(sf);
 				const fix = new Lint.Fix('jsx-attribute-spacing', [
-					this.deleteText(assignment.getFullStart(), assignment.getStart() - assignment.getFullStart()),
-					this.deleteText(initializer.getFullStart(), initializer.getStart() - initializer.getFullStart())
+					this.deleteText(assignment.getFullStart(), assignment.getStart(sf) - assignment.getFullStart()),
+					this.deleteText(initializer.getFullStart(), initializer.getStart(sf) - initializer.getFullStart())
 				]);
 				this.addFailure(
 					this.createFailure(
 						start,
 						width,
-						`jsx attribute '${identifier.getText()}' should not have whitespace around '='`,
+						`jsx attribute '${identifier.getText(sf)}' should not have whitespace around '='`,
 						fix
 					)
 				);

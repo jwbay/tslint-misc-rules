@@ -1,5 +1,6 @@
 ﻿import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
+import nodeIsKind from '../helpers/nodeIsKind';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
@@ -16,20 +17,21 @@ class JsxExpressionSpacingWalker extends Lint.RuleWalker {
 	}
 
 	private validateNode(node: ts.JsxExpression) {
-		const [ , value, closingBrace ] = node.getChildren();
+		const sf = this.getSourceFile();
+		const [ , value, closingBrace ] = node.getChildren(sf);
 
-		if (!value || !this.isClosingBrace(closingBrace)) {
+		if (!value || !nodeIsKind(closingBrace, k => k.CloseBraceToken)) {
 			return;
 		}
 
 		if (!this.isPrecededByValidWhitespace(closingBrace)) {
 			this.addFailure(
 				this.createFailure(
-					closingBrace.getStart(),
+					closingBrace.getStart(sf),
 					1,
 					'jsx expression should have one space before closing \'}\'',
 					new Lint.Fix('jsx-expression-spacing', [
-						this.createReplacement(value.getEnd(), closingBrace.getStart() - value.getEnd(), ' ')
+						this.createReplacement(value.getEnd(), closingBrace.getStart(sf) - value.getEnd(), ' ')
 					])
 				)
 			);
@@ -38,11 +40,11 @@ class JsxExpressionSpacingWalker extends Lint.RuleWalker {
 		if (!this.isPrecededByValidWhitespace(value)) {
 			this.addFailure(
 				this.createFailure(
-					node.getStart() + 1,
+					node.getStart(sf) + 1,
 					1,
 					'jsx expression should have one space after opening \'{\'',
 					new Lint.Fix('jsx-expression-spacing', [
-						this.createReplacement(node.getStart() + 1, value.getFullWidth(), ' ' + value.getText())
+						this.createReplacement(node.getStart(sf) + 1, value.getFullWidth(), ' ' + value.getText(sf))
 					])
 				)
 			);
@@ -51,12 +53,8 @@ class JsxExpressionSpacingWalker extends Lint.RuleWalker {
 
 	private isPrecededByValidWhitespace(node: ts.Node) {
 		return (
-			node.getFullStart() === node.getStart() - 1 ||
+			node.getFullStart() === node.getStart(this.getSourceFile()) - 1 ||
 			node.getFullText().match(/^[\r\n]+/)
 		);
-	}
-
-	private isClosingBrace(node: ts.Node) {
-		return node && node.kind === ts.SyntaxKind.CloseBraceToken;
 	}
 }

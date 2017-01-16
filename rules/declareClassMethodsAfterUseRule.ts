@@ -1,6 +1,7 @@
 import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
 import getClassMethods from '../helpers/getClassMethods';
+import nodeIsKind from '../helpers/nodeIsKind';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
@@ -36,16 +37,12 @@ class DeclareClassMethodsAfterUseWalker extends Lint.RuleWalker {
 
 	private visitChildren(node: ts.Node) {
 		ts.forEachChild(node, child => {
-			if (this.isCallExpression(child)) {
+			if (nodeIsKind<ts.CallExpression>(child, k => k.CallExpression)) {
 				this.visitCallExpressionInMethod(child);
 			}
 
 			this.visitChildren(child);
 		});
-	}
-
-	private isCallExpression(node: ts.Node): node is ts.CallExpression {
-		return node.kind === ts.SyntaxKind.CallExpression;
 	}
 
 	private visitCallExpressionInMethod(node: ts.CallExpression) {

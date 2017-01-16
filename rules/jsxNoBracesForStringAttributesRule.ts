@@ -1,5 +1,6 @@
 ﻿import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
+import nodeIsKind from '../helpers/nodeIsKind';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
@@ -19,6 +20,7 @@ class JsxNoBracesForStringAttributesWalker extends Lint.RuleWalker {
 	}
 
 	private validateAttributes(nodes: ts.JsxAttribute[]) {
+		const sf = this.getSourceFile();
 		const nonSpreadAttributes = nodes.filter(n => n.kind === ts.SyntaxKind.JsxAttribute);
 
 		for (const attribute of nonSpreadAttributes) {
@@ -27,30 +29,29 @@ class JsxNoBracesForStringAttributesWalker extends Lint.RuleWalker {
 				continue;
 			}
 
-			const value = initializer.getChildAt(1);
-			const closeBrace = initializer.getChildAt(2);
+			const value = initializer.getChildAt(1, sf);
+			const closeBrace = initializer.getChildAt(2, sf);
 
-			if (this.isStringLiteral(value) && this.isClosingBrace(closeBrace)) {
+			if (
+				nodeIsKind(value, k => k.StringLiteral) &&
+				nodeIsKind(closeBrace, k => k.CloseBraceToken)
+			) {
 				const fix = new Lint.Fix('jsx-no-braces-for-string-attributes', [
-					this.createReplacement(initializer.getStart(), closeBrace.getStart() + 1 - initializer.getStart(), value.getText())
+					this.createReplacement(
+						initializer.getStart(sf),
+						closeBrace.getStart(sf) + 1 - initializer.getStart(sf),
+						value.getText(sf)
+					)
 				]);
 				this.addFailure(
 					this.createFailure(
-						attribute.getStart(),
-						attribute.getWidth(),
-						`jsx attribute '${name.getText()}' should not have braces around string prop ${value.getText()}`,
+						attribute.getStart(sf),
+						attribute.getWidth(sf),
+						`jsx attribute '${name.getText(sf)}' should not have braces around string prop ${value.getText(sf)}`,
 						fix
 					)
 				);
 			}
 		}
-	}
-
-	private isStringLiteral(node: ts.Node): node is ts.StringLiteral {
-		return node && node.kind === ts.SyntaxKind.StringLiteral;
-	}
-
-	private isClosingBrace(node: ts.Node) {
-		return node && node.kind === ts.SyntaxKind.CloseBraceToken;
 	}
 }

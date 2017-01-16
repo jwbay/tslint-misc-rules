@@ -41,12 +41,17 @@ class ReactLifecyleOrderRule extends Lint.RuleWalker {
 	}
 
 	private validate(node: ts.ClassLikeDeclaration) {
+		if (!this.isReactComponent(node)) {
+			return;
+		}
+
+		const sf = this.getSourceFile();
 		const relevantMethods = getClassMethods(node)
-			.filter(method => this.expectedOrder.indexOf(method.name.getText()) > -1);
+			.filter(method => this.expectedOrder.indexOf(method.name.getText(sf)) > -1);
 
 		const sortedMethods = relevantMethods.slice().sort((left, right) => {
-			const leftName = left.name.getText();
-			const rightName = right.name.getText();
+			const leftName = left.name.getText(sf);
+			const rightName = right.name.getText(sf);
 			return this.expectedOrder.indexOf(leftName) > this.expectedOrder.indexOf(rightName) ? 1 : -1;
 		});
 
@@ -54,12 +59,30 @@ class ReactLifecyleOrderRule extends Lint.RuleWalker {
 			if (sortedMethods[index] !== method) {
 				this.addFailure(
 					this.createFailure(
-						method.name.getStart(),
-						method.name.getWidth(),
-						`expected React lifecyle method '${sortedMethods[index].name.getText()}'`
+						method.name.getStart(sf),
+						method.name.getWidth(sf),
+						`expected React lifecyle method '${sortedMethods[index].name.getText(sf)}'`
 					)
 				);
 			}
 		});
+	}
+
+	private isReactComponent(node: ts.ClassLikeDeclaration) {
+		if (!node.heritageClauses || node.heritageClauses.length !== 1) {
+			return false;
+		}
+
+		const ancestor = node.heritageClauses[0].types[0];
+		if (!ancestor) {
+			return false;
+		}
+
+		return [
+			'React.Component',
+			'React.PureComponent',
+			'Component',
+			'PureComponent'
+		].indexOf(ancestor.getText(this.getSourceFile())) > -1;
 	}
 }

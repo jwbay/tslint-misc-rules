@@ -10,7 +10,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class SortImportsWalker extends Lint.RuleWalker {
 	public visitSourceFile(node: ts.SourceFile) {
 		for (const importGroup of this.getImportGroups(node)) {
-			const importLines = importGroup.map(line => line.getText());
+			const importLines = importGroup.map(line => line.getText(node));
 			const importLinesForComparison = importLines.map(line => line.toLowerCase().replace(' {', ' +'));
 			const sortedImportLines = importLinesForComparison.slice().sort();
 
@@ -25,8 +25,8 @@ class SortImportsWalker extends Lint.RuleWalker {
 					const message = this.getFailureMessage(expectedImport, actualImport);
 					this.addFailure(
 						this.createFailure(
-							actualImport.getStart(),
-							actualImport.getWidth(),
+							actualImport.getStart(node),
+							actualImport.getWidth(node),
 							message
 						)
 					);
@@ -77,14 +77,15 @@ class SortImportsWalker extends Lint.RuleWalker {
 	}
 
 	private getImportBindingName(node: ts.ImportDeclaration | ts.ImportEqualsDeclaration) {
+		const sf = this.getSourceFile();
 		if (this.isImportRequireStatement(node)) {
-			return node.name.getText();
+			return node.name.getText(sf);
 		} else {
 			if (node.importClause) {
-				return node.importClause.getText();
+				return node.importClause.getText(sf);
 			}
 
-			return node.moduleSpecifier.getText();
+			return node.moduleSpecifier.getText(sf);
 		}
 	}
 

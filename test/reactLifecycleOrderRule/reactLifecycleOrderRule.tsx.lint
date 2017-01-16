@@ -1,4 +1,4 @@
-class Passes {
+class Passes extends React.Component {
     property: any;
     componentWillMount() {}
     componentWillReceiveProps() {}
@@ -10,7 +10,7 @@ class Passes {
     componentWillUnmount() {}
 }
 
-class PassesToo {
+class PassesToo extends React.Component {
     constructor() {}
     foo() {}
     componentWillMount() {}
@@ -19,7 +19,16 @@ class PassesToo {
     baz() {}
 }
 
-class Fails {
+class PassesNotComponent extends NotComponent {
+    constructor() {}
+    foo() {}
+    render() {}
+    bar() {}
+    componentWillMount() {}
+    baz() {}
+}
+
+class Fails extends React.Component {
     property: any;
     componentWillMount() {}
     render() {}
@@ -36,7 +45,40 @@ class Fails {
     componentWillUnmount() {}
 }
 
-class FailsToo {
+class FailsReactComponent extends React.Component {
+    constructor() {}
+    foo() {}
+    render() {}
+    ~~~~~~ [expected React lifecyle method 'componentWillMount']
+    bar() {}
+    componentWillMount() {}
+    ~~~~~~~~~~~~~~~~~~ [expected React lifecyle method 'render']
+    baz() {}
+}
+
+class FailsComponent extends Component {
+    constructor() {}
+    foo() {}
+    render() {}
+    ~~~~~~ [expected React lifecyle method 'componentWillMount']
+    bar() {}
+    componentWillMount() {}
+    ~~~~~~~~~~~~~~~~~~ [expected React lifecyle method 'render']
+    baz() {}
+}
+
+class FailsReactPureComponent extends React.PureComponent {
+    constructor() {}
+    foo() {}
+    render() {}
+    ~~~~~~ [expected React lifecyle method 'componentWillMount']
+    bar() {}
+    componentWillMount() {}
+    ~~~~~~~~~~~~~~~~~~ [expected React lifecyle method 'render']
+    baz() {}
+}
+
+class FailsPureComponent extends PureComponent {
     constructor() {}
     foo() {}
     render() {}
