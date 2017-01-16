@@ -24,6 +24,23 @@ class passesWithoutProperties {
     }
 }
 
+class passesWithArrowFunctions {
+    propertyOne: any;
+    propertyTwo: any;
+
+    one = () => {
+    }
+
+    two() {
+    }
+
+    three = () => {
+    }
+
+    four = () => {
+    }
+}
+
 const passesAsExpression = class {
     one() {
     }
@@ -54,6 +71,23 @@ class fails {
     }
     two() {
     ~~~ [precededed-by-newline]
+    }
+}
+
+class failsWithArrowFunctions {
+    propertyOne: any;
+    propertyTwo: any;
+    one = () => {
+    ~~~ [precededed-by-newline]
+    }
+    two() {
+    ~~~ [precededed-by-newline]
+    }
+    three = () => {
+    ~~~~~ [precededed-by-newline]
+    }
+    four = () => {
+    ~~~~ [precededed-by-newline]
     }
 }
 
