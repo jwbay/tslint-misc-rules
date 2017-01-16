@@ -8,6 +8,7 @@ const ok5 = <button onClick={ e => {
   console.log(e);
 } } />;
 const ok6 = () => {};
+const ok7 = () => { statement1; statement2; };
 class foo {
   public ok6 = x => null;
   public ok7 = x => {
@@ -23,5 +24,14 @@ const fails3 = (x, y) => { return x + y };
                          ~~~~~~~~~~~~~~~~ [no-braces]
 const fails4 = <button onClick={ e => { console.log(e); } } />;
                                       ~~~~~~~~~~~~~~~~~~~ [no-braces]
-
+const fails6 = () => { foo(returnX(42)); };
+                     ~~~~~~~~~~~~~~~~~~~~~ [no-braces]
+const fails7 = () => { return {}; };
+                     ~~~~~~~~~~~~~~ [no-braces]
+const fails8 = () => { return { x: 42 }; };
+                     ~~~~~~~~~~~~~~~~~~~~~ [no-braces]
+const fails9 = () => { return 'semi;colon'; };
+                     ~~~~~~~~~~~~~~~~~~~~~~~~ [no-braces]
+const fails10 = () => { return returnX; };
+                      ~~~~~~~~~~~~~~~~~~~ [no-braces]
 [no-braces]: single-line arrow functions should not be wrapped in braces

@@ -8,6 +8,7 @@ const ok5 = <button onClick={ e => {
   console.log(e);
 } } />;
 const ok6 = () => {};
+const ok7 = () => { statement1; statement2; };
 class foo {
   public ok6 = x => null;
   public ok7 = x => {
@@ -19,4 +20,8 @@ class foo {
 const fails2 = x => null;
 const fails3 = (x, y) => x + y;
 const fails4 = <button onClick={ e => console.log(e) } />;
-
+const fails6 = () => foo(returnX(42));
+const fails7 = () => ({});
+const fails8 = () => ({ x: 42 });
+const fails9 = () => 'semi;colon';
+const fails10 = () => returnX;

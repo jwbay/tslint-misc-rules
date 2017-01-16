@@ -4,3 +4,4 @@
 node_modules
 typings
 !test/runner.js
+!test/watch.js

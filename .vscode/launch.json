@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "Launch",
-            "type": "node",
+            "type": "node2",
             "request": "launch",
             "program": "${workspaceRoot}/node_modules/tslint/lib/tslint-cli.js",
             "stopOnEntry": false,

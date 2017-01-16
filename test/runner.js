@@ -2,9 +2,14 @@ var fs = require('fs');
 var path = require('path');
 var os = require('os');
 var execSync = require('child_process').execSync;
+var pattern = process.argv[2];
 
 var directories = fs.readdirSync(path.join(process.cwd(), 'test'))
     .filter(name => !path.extname(name));
+
+if (pattern) {
+    directories = directories.filter(name => name.match(new RegExp(pattern)));
+}
 
 var exitCode = 0;
 
