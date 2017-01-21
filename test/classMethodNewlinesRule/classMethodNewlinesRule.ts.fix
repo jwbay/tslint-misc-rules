@@ -91,6 +91,22 @@ class failsWithArrowFunctions {
     }
 }
 
+class fixesWithMemberModifiers {
+    one: any;
+
+    protected getOne() { return this.one; };
+
+    private getTwo() {
+        return null;
+    }
+
+    public getThree = () => null;
+
+    static getFour() { return null; };
+
+    async getFive() { return await null; };
+}
+
 class failsWithoutProperties {
     constructor() {
     }
