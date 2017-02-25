@@ -1,5 +1,6 @@
 ﻿import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
+import { graceful as detectNewline } from 'detect-newline';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
@@ -8,10 +9,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 }
 
 class SortImportsWalker extends Lint.RuleWalker {
-	public visitSourceFile(node: ts.SourceFile) {
-		for (const importGroup of this.getImportGroups(node)) {
-			const importLines = importGroup.map(line => line.getText(node));
-			const importLinesForComparison = importLines.map(line => line.toLowerCase().replace(' {', ' +'));
+	public visitSourceFile(sf: ts.SourceFile) {
+		for (const importGroup of this.getImportGroups(sf)) {
+			const importLines = importGroup.map(line => line.getText(sf));
+			// opening brace is below alphanumeric characters char-code-wise, but want named imports above defaults
+			// + comes directly after *, so swap with that
+			const importLinesForComparison = importLines.map(line => line.toLowerCase().replace('import {', 'import +'));
 			const sortedImportLines = importLinesForComparison.slice().sort();
 
 			for (let i = 0; i < importLines.length; i += 1) {
@@ -23,11 +26,31 @@ class SortImportsWalker extends Lint.RuleWalker {
 					const expectedImport = importGroup[expectedImportIndex];
 					const actualImport = importGroup[i];
 					const message = this.getFailureMessage(expectedImport, actualImport);
+
+					const sortedOriginalImportLines = sortedImportLines.reduce((result, line) => {
+						const unswapped = line.replace('import +', 'import {');
+						const originalLine = importLines[this.findIndex(importLines, l => l.toLowerCase() === unswapped)];
+						return [...result, originalLine];
+					}, [] as string[]);
+
+					const groupStart = importGroup[0].getStart(sf);
+					const groupEnd = importGroup[importGroup.length - 1].getEnd();
+					const newline = detectNewline(sf.getFullText());
+
+					const fix = new Lint.Fix('sort-imports', [
+						this.createReplacement(
+							groupStart,
+							groupEnd - groupStart,
+							sortedOriginalImportLines.join(newline)
+						)
+					]);
+
 					this.addFailure(
 						this.createFailure(
-							actualImport.getStart(node),
-							actualImport.getWidth(node),
-							message
+							actualImport.getStart(sf),
+							actualImport.getWidth(sf),
+							message,
+							fix
 						)
 					);
 					break;
@@ -35,7 +58,7 @@ class SortImportsWalker extends Lint.RuleWalker {
 			}
 		}
 
-		super.visitSourceFile(node);
+		super.visitSourceFile(sf);
 	}
 
 	private getImportGroups(sourceFile: ts.SourceFile) {

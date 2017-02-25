@@ -20,9 +20,7 @@
             "env": {
                 "NODE_ENV": "development"
             },
-            "externalConsole": false,
-            "sourceMaps": true,
-            "outDir": null
+            "sourceMaps": true
         }
     ]
 }

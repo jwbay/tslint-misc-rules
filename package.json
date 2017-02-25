@@ -8,7 +8,7 @@
     "lint": "tslint rules/*.ts helpers/*.ts",
     "test": "node test/runner.js",
     "ci": "npm run build && npm run lint && npm run test",
-    "watch": "tsc --watch & node test/watch"
+    "watch": "tsc --watch --pretty & node test/watch"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/jwbay/tslint-misc-rules#readme",
   "dependencies": {
+    "detect-newline": "^2.1.0",
     "tslint": "^4.1.1",
     "typescript": ">=1.8 <2.2"
   },
