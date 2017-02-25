@@ -37,6 +37,22 @@ import B from 'B';
 
 breakGroup();
 
+import C from 'C';
+~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected 'a' but saw 'C']
+import a from 'a';
+// comment
+import B from 'B';
+
+breakGroup();
+
+import C from 'C';
+~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected 'a' but saw 'C']
+// comment
+import a from 'a';
+import B from 'B';
+
+breakGroup();
+
 import { x } from 'x';
 ~~~~~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected '{ a }' but saw '{ x }']
 import { a } from 'a';

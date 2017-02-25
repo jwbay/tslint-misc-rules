@@ -35,6 +35,20 @@ import C from 'C';
 
 breakGroup();
 
+import a from 'a';
+// comment
+import B from 'B';
+import C from 'C';
+
+breakGroup();
+
+// comment
+import a from 'a';
+import B from 'B';
+import C from 'C';
+
+breakGroup();
+
 import { a } from 'a';
 import { x } from 'x';
 
