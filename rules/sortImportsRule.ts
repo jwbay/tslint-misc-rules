@@ -25,7 +25,11 @@ class SortImportsWalker extends Lint.RuleWalker {
 			const sortedLines = unsortedLines.slice().sort();
 
 			for (let i = 0; i < unsortedLines.length; i += 1) {
-				if (unsortedLines[i] !== sortedLines[i]) {
+				if (
+					unsortedLines[i] !== sortedLines[i] &&
+					!this.isSideEffectImport(sortableLinesToImports.get(unsortedLines[i])) &&
+					!this.isSideEffectImport(sortableLinesToImports.get(sortedLines[i]))
+				) {
 					const expectedImportIndex = this.findIndex(
 						unsortedLines,
 						line => line === sortedLines[i]
@@ -119,5 +123,12 @@ class SortImportsWalker extends Lint.RuleWalker {
 
 	private isImportRequireStatement(node: ts.Node): node is ts.ImportEqualsDeclaration {
 		return node.kind === ts.SyntaxKind.ImportEqualsDeclaration;
+	}
+
+	private isSideEffectImport(node: ts.ImportDeclaration) {
+		return (
+			!this.isImportRequireStatement(node) &&
+			!node.importClause
+		);
 	}
 }
