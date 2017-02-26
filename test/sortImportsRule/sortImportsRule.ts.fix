@@ -23,74 +23,64 @@ import e from 'e';
 
 breakGroup();
 
-import c from 'c';
-~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected 'a' but saw 'c']
 import a from 'a';
 import b from 'b';
+import c from 'c';
 
 breakGroup();
 
-import C from 'C';
-~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected 'a' but saw 'C']
 import a from 'a';
 import B from 'B';
+import C from 'C';
 
 breakGroup();
 
-import C from 'C';
-~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected 'a' but saw 'C']
 import a from 'a';
 // comment
 import B from 'B';
+import C from 'C';
 
 breakGroup();
 
-import C from 'C';
-~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected 'a' but saw 'C']
 // comment
 import a from 'a';
 import B from 'B';
+import C from 'C';
 
 breakGroup();
 
-import { x } from 'x';
-~~~~~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected '{ a }' but saw '{ x }']
 import { a } from 'a';
+import { x } from 'x';
 
 breakGroup();
 
-import * as x from 'x';
-~~~~~~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected '* as b' but saw '* as x']
 import * as b from 'b';
+import * as x from 'x';
 
 breakGroup();
 
-import x = require('x');
-~~~~~~~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected 'a' but saw 'x']
 import a = require('a');
+import x = require('x');
 
 breakGroup();
 
 import * as a from 'a';
-import b from 'b';
-~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected '{ x, y }' but saw 'b']
 import { x, y } from 'xy';
+import b from 'b';
 import d = require('d');
 import e from 'e';
 
 breakGroup();
 
-import { x, y } from 'xy';
-~~~~~~~~~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected '* as a' but saw '{ x, y }']
 import * as a from 'a';
+import { x, y } from 'xy';
 import b from 'b';
-import e from 'e';
 import d = require('d');
+import e from 'e';
 
 breakGroup();
 
 import * as a from 'a';
 import { x, y } from 'xy';
-import c from 'c';
-~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected 'b' but saw 'c']
 import b = require('b');
+import c from 'c';
