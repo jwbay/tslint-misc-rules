@@ -1,4 +1,4 @@
-﻿import * as Lint from 'tslint/lib';
+import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
 import { graceful as detectNewline } from 'detect-newline';
 

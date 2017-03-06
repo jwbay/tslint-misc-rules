@@ -1,4 +1,4 @@
-﻿import * as Lint from 'tslint/lib';
+import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
 
 export class Rule extends Lint.Rules.AbstractRule {
