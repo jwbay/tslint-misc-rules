@@ -23,15 +23,12 @@ class JsxNoClosingBracketNewlineWalker extends Lint.RuleWalker {
 		const sf = this.getSourceFile();
 		for (const token of this.findClosingTokens(node)) {
 			if (getLeadingWhitespace(token).match(/\n/g)) {
-				const fix = new Lint.Fix('jsx-no-closing-bracket-newline', [
-					this.deleteText(token.getFullStart(), token.getStart(sf) - token.getFullStart())
-				]);
 				this.addFailure(
 					this.createFailure(
 						token.getStart(sf),
 						token.getWidth(sf),
 						'closing brackets for jsx elements should not be on newlines',
-						fix
+						this.deleteText(token.getFullStart(), token.getStart(sf) - token.getFullStart())
 					)
 				);
 			}

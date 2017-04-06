@@ -36,13 +36,11 @@ class JsxNoBracesForStringAttributesWalker extends Lint.RuleWalker {
 				nodeIsKind(value, k => k.StringLiteral) &&
 				nodeIsKind(closeBrace, k => k.CloseBraceToken)
 			) {
-				const fix = new Lint.Fix('jsx-no-braces-for-string-attributes', [
-					this.createReplacement(
-						initializer.getStart(sf),
-						closeBrace.getStart(sf) + 1 - initializer.getStart(sf),
-						value.getText(sf)
-					)
-				]);
+				const fix = this.createReplacement(
+					initializer.getStart(sf),
+					closeBrace.getStart(sf) + 1 - initializer.getStart(sf),
+					value.getText(sf)
+				);
 				this.addFailure(
 					this.createFailure(
 						attribute.getStart(sf),

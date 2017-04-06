@@ -46,13 +46,11 @@ class SortImportsWalker extends Lint.RuleWalker {
 					const groupEnd = importGroup[importGroup.length - 1].getEnd();
 					const newline = detectNewline(sf.getFullText());
 
-					const fix = new Lint.Fix('sort-imports', [
-						this.createReplacement(
-							groupStart,
-							groupEnd - groupStart,
-							sortedImports.join(newline)
-						)
-					]);
+					const fix = this.createReplacement(
+						groupStart,
+						groupEnd - groupStart,
+						sortedImports.join(newline)
+					);
 
 					this.addFailure(
 						this.createFailure(

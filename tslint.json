@@ -1,6 +1,5 @@
 {
   "rules": {
-    //core rules
     "align": [ true, "parameters", "statements" ],
     "class-name": true,
     "curly": true,
@@ -12,64 +11,23 @@
     "member-ordering": [ true, "static-before-instance", "variables-before-functions" ],
     "no-arg": true,
     "no-conditional-assignment": true,
-    "no-consecutive-blank-lines": true,
+    "no-consecutive-blank-lines": [true, 1],
     "no-console": [ true, "assert", "count", "debug", "dir", "dirxml", "group", "groupCollapsed", "groupEnd", "log", "profile", "profileEnd", "table", "time", "timeEnd", "timeStamp", "trace", "warn" ],
     "no-construct": true,
     "no-debugger": true,
     "no-duplicate-variable": true,
     "no-eval": true,
-    "no-inferrable-types": true,
+    "no-inferrable-types": [true],
     "no-internal-module": true,
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
-    "no-use-before-declare": true,
     "no-var-keyword": true,
     "one-line": [ true, "check-open-brace", "check-catch", "check-else", "check-whitespace" ],
-    "one-variable-per-declaration": true,
+    "one-variable-per-declaration": [true],
     "quotemark": [ true, "single" ],
     "radix": true,
     "semicolon": [ true, "always" ],
     "triple-equals": [ true, "allow-null-check" ],
-    "whitespace": [ true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type", "check-module", "check-typecast" ],
-
-    //tslint-microsoft-contrib
-    "mocha-avoid-only": true,
-    "no-banned-terms": true,
-    "no-constant-condition": true,
-    "no-control-regex": true,
-    "no-delete-expression": true,
-    "no-duplicate-case": true,
-    "no-empty-interfaces": true,
-    "no-empty-line-after-opening-brace": true,
-    "no-for-in": true,
-    "no-function-constructor-with-string-args": true,
-    "no-increment-decrement": true,
-    "no-invalid-regexp": true,
-    "no-octal-literal": true,
-    "no-regex-spaces": true,
-    "no-sparse-arrays": true,
-    "no-stateless-class": true,
-    "no-unnecessary-bind": true,
-    "no-unnecessary-override": true,
-    "no-unnecessary-semicolons": true,
-    "no-with-statement": true,
-    "prefer-array-literal": true,
-    "prefer-const": true,
-    "use-isnan": true,
-
-    //ts-eslint-rules
-    "no-empty-character-class": true,
-    "no-extra-boolean-cast": true,
-    "no-inner-declarations": true,
-    "no-unexpected-multiline": true,
-    "valid-typeof": true,
-
-    //this project's rules
-    "sort-imports": true
-  },
-  "rulesDirectory": [
-    "./node_modules/tslint-microsoft-contrib",
-    "./node_modules/tslint-eslint-rules/dist/rules",
-    "./rules"
-  ]
+    "whitespace": [ true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type", "check-module", "check-typecast" ]
+  }
 }

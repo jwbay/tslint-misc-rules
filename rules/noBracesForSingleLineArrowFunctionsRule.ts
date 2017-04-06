@@ -20,15 +20,12 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 		) {
 			const sf = this.getSourceFile();
 			const failureStart = body.getStart(sf);
-			const fix = new Lint.Fix('no-braces-for-single-line-arrow-functions', [
-				this.createReplacement(failureStart, body.getWidth(sf), this.getFixedText(body))
-			]);
 			this.addFailure(
 				this.createFailure(
 					failureStart,
 					body.getWidth(sf),
 					'single-line arrow functions should not be wrapped in braces',
-					fix
+					this.createReplacement(failureStart, body.getWidth(sf), this.getFixedText(body))
 				)
 			);
 		}

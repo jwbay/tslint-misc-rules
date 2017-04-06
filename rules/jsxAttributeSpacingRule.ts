@@ -34,10 +34,10 @@ class JsxAttributeSpacingWalker extends Lint.RuleWalker {
 			) {
 				const start = attribute.getStart(sf);
 				const width = attribute.getWidth(sf);
-				const fix = new Lint.Fix('jsx-attribute-spacing', [
+				const fix = [
 					this.deleteText(assignment.getFullStart(), assignment.getStart(sf) - assignment.getFullStart()),
 					this.deleteText(initializer.getFullStart(), initializer.getStart(sf) - initializer.getFullStart())
-				]);
+				];
 				this.addFailure(
 					this.createFailure(
 						start,

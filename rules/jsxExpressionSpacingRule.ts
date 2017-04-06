@@ -30,9 +30,7 @@ class JsxExpressionSpacingWalker extends Lint.RuleWalker {
 					closingBrace.getStart(sf),
 					1,
 					'jsx expression should have one space before closing \'}\'',
-					new Lint.Fix('jsx-expression-spacing', [
-						this.createReplacement(value.getEnd(), closingBrace.getStart(sf) - value.getEnd(), ' ')
-					])
+					this.createReplacement(value.getEnd(), closingBrace.getStart(sf) - value.getEnd(), ' ')
 				)
 			);
 		}
@@ -43,9 +41,7 @@ class JsxExpressionSpacingWalker extends Lint.RuleWalker {
 					node.getStart(sf) + 1,
 					1,
 					'jsx expression should have one space after opening \'{\'',
-					new Lint.Fix('jsx-expression-spacing', [
-						this.createReplacement(node.getStart(sf) + 1, value.getFullWidth(), ' ' + value.getText(sf))
-					])
+					this.createReplacement(node.getStart(sf) + 1, value.getFullWidth(), ' ' + value.getText(sf))
 				)
 			);
 		}

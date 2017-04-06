@@ -19,15 +19,12 @@ class PreferOrOperatorOverTernaryWalker extends Lint.RuleWalker {
 		) {
 			const start = questionToken.getStart(sf);
 			const width = colonToken.getStart(sf) + 1 - start;
-			const fix = new Lint.Fix('prefer-or-operator-over-ternary', [
-				this.createReplacement(start, width, '||')
-			]);
 			this.addFailure(
 				this.createFailure(
 					whenTrue.getStart(sf),
 					whenTrue.getWidth(sf),
 					`use '||' when first and second operands of ternary are identical`,
-					fix
+					this.createReplacement(start, width, '||')
 				)
 			);
 		}
