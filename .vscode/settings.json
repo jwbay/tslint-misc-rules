@@ -1,7 +1,10 @@
 {
 	"files.exclude": {
-		"**/*.js": { "when": "$(basename).ts"}
-	}
-,
-"typescript.tsdk": "./node_modules/typescript/lib"
+		"**/*.js": {
+			"when": "$(basename).ts"
+		}
+	},
+	"typescript.tsdk": "./node_modules/typescript/lib",
+	"tslint.autoFixOnSave": true,
+	"files.insertFinalNewline": true,
 }

@@ -3,7 +3,13 @@ language: node_js
 node_js:
   - "7"
   - "6"
-  - "5"
   - "4"
 
-script: npm run ci
+script:
+  - yarn lint
+  - yarn add typescript@2.1
+  - yarn ci
+  - yarn add typescript@2.2
+  - yarn ci
+  - yarn add typescript@2.3
+  - yarn ci

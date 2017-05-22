@@ -1,6 +1,7 @@
 import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
 import nodeIsKind from '../helpers/nodeIsKind';
+import getJsxAttributes from '../helpers/getJsxAttributes';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
@@ -10,12 +11,12 @@ export class Rule extends Lint.Rules.AbstractRule {
 
 class JsxNoBracesForStringAttributesWalker extends Lint.RuleWalker {
 	public visitJsxElement(node: ts.JsxElement) {
-		this.validateAttributes(node.openingElement.attributes as ts.NodeArray<ts.JsxAttribute>);
+		this.validateAttributes(getJsxAttributes(node.openingElement));
 		super.visitJsxElement(node);
 	}
 
 	public visitJsxSelfClosingElement(node: ts.JsxSelfClosingElement) {
-		this.validateAttributes(node.attributes as ts.NodeArray<ts.JsxAttribute>);
+		this.validateAttributes(getJsxAttributes(node));
 		super.visitJsxSelfClosingElement(node);
 	}
 
