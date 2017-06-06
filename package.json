@@ -1,6 +1,6 @@
 {
   "name": "tslint-misc-rules",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Collection of miscellaneous TSLint rules",
   "main": "index.js",
   "scripts": {
@@ -29,11 +29,16 @@
   },
   "homepage": "https://github.com/jwbay/tslint-misc-rules#readme",
   "dependencies": {
-    "detect-newline": "^2.1.0",
+    "detect-newline": "^2.1.0"
+  },
+  "peerDependencies": {
     "tslint": "^5.0.0",
-    "typescript": ">=1.8 <=2.3"
+    "typescript": ">=2.1 <=2.3"
   },
   "devDependencies": {
-    "chokidar": "^1.6.1"
+    "@types/node": "^7.0.28",
+    "chokidar": "^1.6.1",
+    "tslint": "^5.0.0",
+    "typescript": ">=2.1 <=2.3"
   }
 }
