@@ -14,3 +14,5 @@ script:
   - yarn ci
   - yarn add typescript@2.3
   - yarn ci
+  - yarn add typescript@2.4
+  - yarn ci
