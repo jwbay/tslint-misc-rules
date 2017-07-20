@@ -2,6 +2,12 @@ const passes = (
     <div>
         <span className={ value } />
         { value }
+        { true && (
+            <span />
+        ) }
+        { [].map(x => {
+            return <span>{ value }</span>;
+        }) }
     </div>
 );
 
@@ -15,6 +21,16 @@ const fails = (
         { missingOpeningAndClosingSpace }
         { extraLeadingSpace }
         { extraTrailingSpace }
+        { true && (
+            <span />
+        ) }
+        { [].map(x => {
+            return (
+                <span>
+                    { value }
+                </span>
+            )
+        }) }
     </div>
 );
 

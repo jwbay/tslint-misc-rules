@@ -2,29 +2,51 @@ const passes = (
     <div>
         <span className={ value } />
         { value }
+        { true && (
+            <span />
+        ) }
+        { [].map(x => {
+            return <span>{ value }</span>;
+        }) }
     </div>
 );
 
 const fails = (
     <div>
         <span className={'missingOpeningSpace' } />
-                         ~  [no-opening-space]
+                        ~ [no-opening-space]
         <span className={ 'missingClosingSpace'} />
                                                ~  [no-closing-space]
         <span className={'missingOpeningAndClosingSpace'} />
-                         ~  [no-opening-space]
-                                                        ~  [no-closing-space]
+                        ~ [no-opening-space]
+                                                        ~ [no-closing-space]
         {missingOpeningSpace }
-         ~  [no-opening-space]
+        ~  [no-opening-space]
         { missingClosingSpace}
                              ~  [no-closing-space]
         {missingOpeningAndClosingSpace}
-                                      ~  [no-closing-space]
-         ~  [no-opening-space]
+                                      ~ [no-closing-space]
+        ~ [no-opening-space]
         {  extraLeadingSpace }
-         ~ [no-opening-space]
+        ~ [no-opening-space]
         { extraTrailingSpace  }
                               ~ [no-closing-space]
+        {true && (
+        ~ [no-opening-space]
+            <span />
+        )}
+         ~ [no-closing-space]
+        {[].map(x => {
+        ~ [no-opening-space]
+            return (
+                <span>
+                    {value}
+                    ~ [no-opening-space]
+                          ~ [no-closing-space]
+                </span>
+            )
+        })}
+          ~ [no-closing-space]
     </div>
 );
 
