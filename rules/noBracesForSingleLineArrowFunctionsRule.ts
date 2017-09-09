@@ -1,10 +1,12 @@
-import * as Lint from 'tslint/lib';
-import * as ts from 'typescript';
-import { nodeIsKind } from '../helpers/nodeIsKind';
+import * as Lint from 'tslint/lib'
+import * as ts from 'typescript'
+import { nodeIsKind } from '../helpers/nodeIsKind'
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
-		return this.applyWithWalker(new Walker(sourceFile, this.ruleName, this.getOptions()));
+		return this.applyWithWalker(
+			new Walker(sourceFile, this.ruleName, this.getOptions())
+		)
 	}
 }
 
@@ -12,16 +14,16 @@ class Walker extends Lint.AbstractWalker<{}> {
 	public walk(sourceFile: ts.SourceFile) {
 		const cb = (node: ts.Node): void => {
 			if (nodeIsKind<ts.ArrowFunction>(node, 'ArrowFunction')) {
-				this.validate(node);
+				this.validate(node)
 			}
-			return ts.forEachChild(node, cb);
-		};
+			return ts.forEachChild(node, cb)
+		}
 
-		ts.forEachChild(sourceFile, cb);
+		ts.forEachChild(sourceFile, cb)
 	}
 
 	private validate(node: ts.ArrowFunction) {
-		const { body } = node;
+		const { body } = node
 
 		if (
 			this.functionBodyIsBraced(body) &&
@@ -32,42 +34,42 @@ class Walker extends Lint.AbstractWalker<{}> {
 				body,
 				'single-line arrow functions should not be wrapped in braces',
 				Lint.Replacement.replaceNode(body, this.getFixedText(body))
-			);
+			)
 		}
 	}
 
 	private functionBodyIsBraced(node: ts.ConciseBody): node is ts.Block {
-		return nodeIsKind(node, 'Block');
+		return nodeIsKind(node, 'Block')
 	}
 
 	private functionBodyHasOneStatement(node: ts.Block) {
-		return node.statements.length === 1;
+		return node.statements.length === 1
 	}
 
 	private functionBodyIsOneLine(node: ts.Block) {
-		const bodyText = node.getFullText(this.getSourceFile());
-		return !/\n/.test(bodyText);
+		const bodyText = node.getFullText(this.getSourceFile())
+		return !/\n/.test(bodyText)
 	}
 
 	private getFixedText(node: ts.Block) {
-		const sf = this.getSourceFile();
-		const body = node.getChildAt(1, sf);
-		let result = this.stripSemicolon(body.getText(sf));
+		const sf = this.getSourceFile()
+		const body = node.getChildAt(1, sf)
+		let result = this.stripSemicolon(body.getText(sf))
 
-		const statement = body.getChildAt(0, sf);
+		const statement = body.getChildAt(0, sf)
 		if (nodeIsKind(statement, 'ReturnStatement')) {
-			result = result.replace('return', '').trim();
+			result = result.replace('return', '').trim()
 
-			const returnExpression = statement.getChildAt(1, sf);
+			const returnExpression = statement.getChildAt(1, sf)
 			if (nodeIsKind(returnExpression, 'ObjectLiteralExpression')) {
-				result = `(${result})`;
+				result = `(${result})`
 			}
 		}
 
-		return result;
+		return result
 	}
 
 	private stripSemicolon(text: string) {
-		return text.trim().replace(/;$/, '');
+		return text.trim().replace(/;$/, '')
 	}
 }

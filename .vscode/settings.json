@@ -6,5 +6,6 @@
 	},
 	"typescript.tsdk": "./node_modules/typescript/lib",
 	"tslint.autoFixOnSave": true,
-	"files.insertFinalNewline": true,
+	"editor.formatOnSave": true,
+	"files.insertFinalNewline": true
 }

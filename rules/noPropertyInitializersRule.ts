@@ -1,21 +1,23 @@
-import * as Lint from 'tslint/lib';
-import * as ts from 'typescript';
+import * as Lint from 'tslint/lib'
+import * as ts from 'typescript'
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
-		return this.applyWithWalker(new ClassMethodNewlinesWalker(sourceFile, this.getOptions()));
+		return this.applyWithWalker(
+			new ClassMethodNewlinesWalker(sourceFile, this.getOptions())
+		)
 	}
 }
 
 class ClassMethodNewlinesWalker extends Lint.RuleWalker {
 	public visitClassDeclaration(node: ts.ClassDeclaration) {
-		super.visitClassDeclaration(node);
-		this.validate(node);
+		super.visitClassDeclaration(node)
+		this.validate(node)
 	}
 
 	public visitClassExpression(node: ts.ClassExpression) {
-		super.visitClassExpression(node);
-		this.validate(node);
+		super.visitClassExpression(node)
+		this.validate(node)
 	}
 
 	private validate(node: ts.ClassLikeDeclaration) {
@@ -27,7 +29,7 @@ class ClassMethodNewlinesWalker extends Lint.RuleWalker {
 						member.name.getWidth(),
 						'property initializers are nonstandard -- assign in constructor or method'
 					)
-				);
+				)
 			}
 		}
 	}

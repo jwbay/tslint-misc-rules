@@ -1,5 +1,5 @@
-import { Node } from 'typescript';
+import { Node } from 'typescript'
 
 export function getLeadingWhitespace(node: Node) {
-	return node.getFullText().slice(0, node.getStart() - node.getFullStart());
+	return node.getFullText().slice(0, node.getStart() - node.getFullStart())
 }
