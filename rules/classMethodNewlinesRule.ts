@@ -1,7 +1,7 @@
 import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
-import getClassMethods from '../helpers/getClassMethods';
-import getLeadingWhitespace from '../helpers/getLeadingWhitespace';
+import { getClassMethods } from '../helpers/getClassMethods';
+import { getLeadingWhitespace } from '../helpers/getLeadingWhitespace';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {

@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
-import nodeIsKind from './nodeIsKind';
+import { nodeIsKind } from './nodeIsKind';
 
-export default function getClassMethods(node: ts.ClassLikeDeclaration) {
+export function getClassMethods(node: ts.ClassLikeDeclaration) {
 	if (!node.members) {
 		return [];
 	}

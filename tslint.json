@@ -15,6 +15,7 @@
     "no-console": [ true, "assert", "count", "debug", "dir", "dirxml", "group", "groupCollapsed", "groupEnd", "log", "profile", "profileEnd", "table", "time", "timeEnd", "timeStamp", "trace", "warn" ],
     "no-construct": true,
     "no-debugger": true,
+    "no-default-export": true,
     "no-duplicate-variable": true,
     "no-eval": true,
     "no-inferrable-types": [true],

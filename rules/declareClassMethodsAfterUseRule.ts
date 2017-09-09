@@ -1,7 +1,7 @@
 import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
-import getClassMethods from '../helpers/getClassMethods';
-import nodeIsKind from '../helpers/nodeIsKind';
+import { getClassMethods } from '../helpers/getClassMethods';
+import { nodeIsKind } from '../helpers/nodeIsKind';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
