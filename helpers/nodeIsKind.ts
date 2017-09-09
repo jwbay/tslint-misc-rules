@@ -2,7 +2,7 @@ import * as ts from 'typescript';
 
 export function nodeIsKind<T extends ts.Node>(
 	node: ts.Node,
-	getKind: (k: typeof ts.SyntaxKind) => ts.SyntaxKind
+	kind: keyof typeof ts.SyntaxKind,
 ): node is T {
-	return !!node && node.kind === getKind(ts.SyntaxKind);
+	return node && node.kind === ts.SyntaxKind[kind];
 }

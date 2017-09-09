@@ -4,13 +4,23 @@ import { nodeIsKind } from '../helpers/nodeIsKind';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
-		return this.applyWithWalker(new NoBracesForSingleLineArrowFunctionsWalker(sourceFile, this.getOptions()));
+		return this.applyWithWalker(new Walker(sourceFile, this.ruleName, this.getOptions()));
 	}
 }
 
-class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
-	protected visitArrowFunction(node: ts.ArrowFunction) {
-		super.visitArrowFunction(node);
+class Walker extends Lint.AbstractWalker<{}> {
+	public walk(sourceFile: ts.SourceFile) {
+		const cb = (node: ts.Node): void => {
+			if (nodeIsKind<ts.ArrowFunction>(node, 'ArrowFunction')) {
+				this.validate(node);
+			}
+			return ts.forEachChild(node, cb);
+		};
+
+		ts.forEachChild(sourceFile, cb);
+	}
+
+	private validate(node: ts.ArrowFunction) {
 		const { body } = node;
 
 		if (
@@ -18,21 +28,16 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 			this.functionBodyHasOneStatement(body) &&
 			this.functionBodyIsOneLine(body)
 		) {
-			const sf = this.getSourceFile();
-			const failureStart = body.getStart(sf);
-			this.addFailure(
-				this.createFailure(
-					failureStart,
-					body.getWidth(sf),
-					'single-line arrow functions should not be wrapped in braces',
-					this.createReplacement(failureStart, body.getWidth(sf), this.getFixedText(body))
-				)
+			this.addFailureAtNode(
+				body,
+				'single-line arrow functions should not be wrapped in braces',
+				Lint.Replacement.replaceNode(body, this.getFixedText(body))
 			);
 		}
 	}
 
 	private functionBodyIsBraced(node: ts.ConciseBody): node is ts.Block {
-		return nodeIsKind(node, k => k.Block);
+		return nodeIsKind(node, 'Block');
 	}
 
 	private functionBodyHasOneStatement(node: ts.Block) {
@@ -41,7 +46,7 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 
 	private functionBodyIsOneLine(node: ts.Block) {
 		const bodyText = node.getFullText(this.getSourceFile());
-		return !bodyText.match(/\n/);
+		return !/\n/.test(bodyText);
 	}
 
 	private getFixedText(node: ts.Block) {
@@ -50,11 +55,11 @@ class NoBracesForSingleLineArrowFunctionsWalker extends Lint.RuleWalker {
 		let result = this.stripSemicolon(body.getText(sf));
 
 		const statement = body.getChildAt(0, sf);
-		if (nodeIsKind(statement, k => k.ReturnStatement)) {
+		if (nodeIsKind(statement, 'ReturnStatement')) {
 			result = result.replace('return', '').trim();
 
 			const returnExpression = statement.getChildAt(1, sf);
-			if (nodeIsKind(returnExpression, k => k.ObjectLiteralExpression)) {
+			if (nodeIsKind(returnExpression, 'ObjectLiteralExpression')) {
 				result = `(${result})`;
 			}
 		}

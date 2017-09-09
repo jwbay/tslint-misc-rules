@@ -15,8 +15,8 @@ class PreferEs6ImportsWalker extends Lint.RuleWalker {
 		const bannedModuleRequires: string[] = this.getOptions();
 
 		if (
-			nodeIsKind<ts.ExternalModuleReference>(moduleReference, k => k.ExternalModuleReference) &&
-			nodeIsKind(moduleReference.expression, k => k.StringLiteral)
+			nodeIsKind<ts.ExternalModuleReference>(moduleReference, 'ExternalModuleReference') &&
+			nodeIsKind(moduleReference.expression, 'StringLiteral')
 		) {
 			const modulePath = moduleReference.expression.getText(sf);
 			const moduleName = modulePath.split(/[\/\\]+/).pop().replace(/['"]/g, '');

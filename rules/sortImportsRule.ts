@@ -2,14 +2,22 @@ import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
 import { graceful as detectNewline } from 'detect-newline';
 
+interface Options {
+	whitespaceInsensitive: boolean;
+}
+
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
-		return this.applyWithWalker(new SortImportsWalker(sourceFile, this.getOptions()));
+		const options: Options = {
+			whitespaceInsensitive: this.getOptions().ruleArguments.indexOf('whitespace-insensitive') > -1
+		};
+
+		return this.applyWithWalker(new Walker(sourceFile, this.ruleName, options));
 	}
 }
 
-class SortImportsWalker extends Lint.RuleWalker {
-	public visitSourceFile(sf: ts.SourceFile) {
+class Walker extends Lint.AbstractWalker<Options> {
+	public walk(sf: ts.SourceFile) {
 		for (const importGroup of this.getImportGroups(sf)) {
 			const sortableLinesToImports = new Map<string, ts.ImportDeclaration>();
 			const unsortedLines = importGroup.map(importDeclaration => {
@@ -19,7 +27,7 @@ class SortImportsWalker extends Lint.RuleWalker {
 					.toLowerCase()
 					.replace('import {', 'import +');
 
-				if (this.hasOption('whitespace-insensitive')) {
+				if (this.options.whitespaceInsensitive) {
 					sortableLine = this.normalizeAllWhitespace(sortableLine);
 				}
 
@@ -53,9 +61,9 @@ class SortImportsWalker extends Lint.RuleWalker {
 					const groupEnd = importGroup[importGroup.length - 1].getEnd();
 					const newline = detectNewline(sf.getFullText());
 
-					const fix = this.createReplacement(
+					const fix = Lint.Replacement.replaceFromTo(
 						groupStart,
-						groupEnd - groupStart,
+						groupEnd,
 						sortedImports.join(newline)
 					);
 
@@ -73,8 +81,6 @@ class SortImportsWalker extends Lint.RuleWalker {
 				}
 			}
 		}
-
-		super.visitSourceFile(sf);
 	}
 
 	private getImportGroups(sourceFile: ts.SourceFile) {

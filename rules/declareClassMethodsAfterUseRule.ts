@@ -5,23 +5,27 @@ import { nodeIsKind } from '../helpers/nodeIsKind';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
-		return this.applyWithWalker(new DeclareClassMethodsAfterUseWalker(sourceFile, this.getOptions()));
+		return this.applyWithWalker(new DeclareClassMethodsAfterUseWalker(sourceFile, this.ruleName, this.getOptions()));
 	}
 }
 
-class DeclareClassMethodsAfterUseWalker extends Lint.RuleWalker {
+class DeclareClassMethodsAfterUseWalker extends Lint.AbstractWalker<{}> {
 	private currentMethodName: string;
 	private visitedMethodDeclarations: string[];
 	private visitedMethodCalls: string[];
 
-	public visitClassDeclaration(node: ts.ClassDeclaration) {
-		this.validate(node);
-		super.visitClassDeclaration(node);
-	}
+	public walk(sourceFile: ts.SourceFile) {
+		const cb = (node: ts.Node): void => {
+			if (
+				nodeIsKind(node, 'ClassDeclaration') ||
+				nodeIsKind(node, 'ClassExpression')
+			) {
+				this.validate(node as ts.ClassLikeDeclaration);
+			}
+			return ts.forEachChild(node, cb);
+		};
 
-	public visitClassExpression(node: ts.ClassExpression) {
-		this.validate(node);
-		super.visitClassExpression(node);
+		ts.forEachChild(sourceFile, cb);
 	}
 
 	private validate(node: ts.ClassLikeDeclaration) {
@@ -39,7 +43,7 @@ class DeclareClassMethodsAfterUseWalker extends Lint.RuleWalker {
 
 	private visitChildren(node: ts.Node) {
 		ts.forEachChild(node, child => {
-			if (nodeIsKind<ts.CallExpression>(child, k => k.CallExpression)) {
+			if (nodeIsKind<ts.CallExpression>(child, 'CallExpression')) {
 				this.visitCallExpressionInMethod(child);
 			}
 
@@ -55,13 +59,7 @@ class DeclareClassMethodsAfterUseWalker extends Lint.RuleWalker {
 
 		if (this.methodHasBeenDeclared(methodName)) {
 			if (!this.isRecursion(methodName) && !this.methodHasBeenCalled(methodName)) {
-				this.addFailure(
-					this.createFailure(
-						propertyExpression.getStart(this.getSourceFile()),
-						propertyExpression.getWidth(this.getSourceFile()),
-						'declare class methods after use'
-					)
-				);
+				this.addFailureAtNode(propertyExpression, 'declare class methods after use');
 			}
 		} else {
 			// declaration needs to come after first use, not all uses.
@@ -73,8 +71,8 @@ class DeclareClassMethodsAfterUseWalker extends Lint.RuleWalker {
 
 	private callExpressionBelongsToThis(node: ts.Expression) {
 		return (
-			nodeIsKind<ts.PropertyAccessExpression>(node, k => k.PropertyAccessExpression) &&
-			nodeIsKind(node.expression, k => k.ThisKeyword)
+			nodeIsKind<ts.PropertyAccessExpression>(node, 'PropertyAccessExpression') &&
+			nodeIsKind(node.expression, 'ThisKeyword')
 		);
 	}
 

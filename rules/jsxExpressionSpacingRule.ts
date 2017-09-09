@@ -4,57 +4,57 @@ import { nodeIsKind } from '../helpers/nodeIsKind';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
-		return this.applyWithWalker(new JsxExpressionSpacingWalker(sourceFile, this.getOptions()));
+		return this.applyWithFunction(sourceFile, walk);
 	}
 }
 
-class JsxExpressionSpacingWalker extends Lint.RuleWalker {
-	public walkChildren(node: ts.Node) {
-		if (node.kind === ts.SyntaxKind.JsxExpression) {
-			this.validateNode(node as ts.JsxExpression);
+function walk(ctx: Lint.WalkContext<void>) {
+	ts.forEachChild(ctx.sourceFile, function cb(node: ts.Node): void {
+		if (nodeIsKind<ts.JsxExpression>(node, 'JsxExpression')) {
+			checkExpression(ctx, node);
 		}
-		super.walkChildren(node);
+		return ts.forEachChild(node, cb);
+	});
+}
+
+function checkExpression(ctx: Lint.WalkContext<void>, node: ts.JsxExpression) {
+	const sf = ctx.sourceFile;
+	const [openingBrace, value, closingBrace] = node.getChildren(sf);
+
+	if (!value || !nodeIsKind(closingBrace, 'CloseBraceToken')) {
+		return;
 	}
 
-	private validateNode(node: ts.JsxExpression) {
-		const sf = this.getSourceFile();
-		const [openingBrace, value, closingBrace] = node.getChildren(sf);
-
-		if (!value || !nodeIsKind(closingBrace, k => k.CloseBraceToken)) {
-			return;
-		}
-
-		if (!this.isPrecededByValidWhitespace(closingBrace)) {
-			const braceStart = closingBrace.getStart(sf);
-			const expressionEnd = value.getEnd();
-			const spaceCount = braceStart - expressionEnd;
-			this.addFailureAtNode(
-				closingBrace,
-				`jsx expression should have one space before closing '}'`,
-				spaceCount === 0
-					? this.appendText(expressionEnd, ' ')
-					: this.deleteText(expressionEnd, spaceCount - 1)
-			);
-		}
-
-		if (!this.isPrecededByValidWhitespace(value)) {
-			const braceEnd = openingBrace.getEnd();
-			const expressionStart = value.getStart(sf);
-			const spaceCount = expressionStart - braceEnd;
-			this.addFailureAtNode(
-				openingBrace,
-				`jsx expression should have one space after opening '{'`,
-				spaceCount === 0
-					? this.appendText(braceEnd, ' ')
-					: this.deleteText(braceEnd, spaceCount - 1)
-			);
-		}
-	}
-
-	private isPrecededByValidWhitespace(node: ts.Node) {
-		return (
-			node.getFullStart() === node.getStart(this.getSourceFile()) - 1 ||
-			node.getFullText().match(/^[\r\n]+/)
+	if (!isPrecededByValidWhitespace(closingBrace, sf)) {
+		const braceStart = closingBrace.getStart(sf);
+		const expressionEnd = value.getEnd();
+		const spaceCount = braceStart - expressionEnd;
+		ctx.addFailureAtNode(
+			closingBrace,
+			`jsx expression should have one space before closing '}'`,
+			spaceCount === 0
+				? Lint.Replacement.appendText(expressionEnd, ' ')
+				: Lint.Replacement.deleteText(expressionEnd, spaceCount - 1)
 		);
 	}
+
+	if (!isPrecededByValidWhitespace(value, sf)) {
+		const braceEnd = openingBrace.getEnd();
+		const expressionStart = value.getStart(sf);
+		const spaceCount = expressionStart - braceEnd;
+		ctx.addFailureAtNode(
+			openingBrace,
+			`jsx expression should have one space after opening '{'`,
+			spaceCount === 0
+				? Lint.Replacement.appendText(braceEnd, ' ')
+				: Lint.Replacement.deleteText(braceEnd, spaceCount - 1)
+		);
+	}
+}
+
+function isPrecededByValidWhitespace(node: ts.Node, sf: ts.SourceFile) {
+	return (
+		node.getFullStart() === node.getStart(sf) - 1 ||
+		/^[\r\n]+/.test(node.getFullText(sf))
+	);
 }

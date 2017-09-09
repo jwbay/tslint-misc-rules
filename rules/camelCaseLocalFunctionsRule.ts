@@ -4,38 +4,35 @@ import { nodeIsKind } from '../helpers/nodeIsKind';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
-		return this.applyWithWalker(new CamelCaseFunctionsWalker(sourceFile, this.getOptions()));
+		return this.applyWithFunction(sourceFile, walk);
 	}
 }
 
-class CamelCaseFunctionsWalker extends Lint.RuleWalker {
-	public visitCallExpression(node: ts.CallExpression) {
-		const name = node.expression;
-		if (nodeIsKind<ts.Identifier>(name, k => k.Identifier)) {
-			const firstLetter = name.text.charAt(0);
-			if (firstLetter !== firstLetter.toLowerCase() && !this.isInWhitelist(name.text)) {
-				this.addFailure(
-					this.createFailure(
-						name.getStart(this.getSourceFile()),
-						name.getWidth(this.getSourceFile()),
-						'local function names should be camelCase'
-					)
-				);
-			}
+function walk(ctx: Lint.WalkContext<void>) {
+	ts.forEachChild(ctx.sourceFile, function cb(node: ts.Node): void {
+		if (
+			nodeIsKind<ts.CallExpression>(node, 'CallExpression') &&
+			nodeIsKind<ts.Identifier>(node.expression, 'Identifier')
+		) {
+			checkFunctionName(ctx, node.expression);
 		}
+		return ts.forEachChild(node, cb);
+	});
+}
 
-		super.visitCallExpression(node);
-	}
+const whitelist = [
+	'Array',
+	'Boolean',
+	'Error',
+	'Function',
+	'Number',
+	'Object',
+	'String'
+];
 
-	private isInWhitelist(name: string) {
-		return [
-			'Array',
-			'Boolean',
-			'Error',
-			'Function',
-			'Number',
-			'Object',
-			'String'
-		].indexOf(name) > -1;
+function checkFunctionName(ctx: Lint.WalkContext<void>, name: ts.Identifier) {
+	const firstLetter = name.text.charAt(0);
+	if (firstLetter !== firstLetter.toLowerCase() && whitelist.indexOf(name.text) === -1) {
+		ctx.addFailureAtNode(name, 'local function names should be camelCase');
 	}
 }

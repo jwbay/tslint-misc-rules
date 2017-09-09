@@ -1,55 +1,39 @@
 import * as Lint from 'tslint/lib';
 import * as ts from 'typescript';
+import { nodeIsKind } from '../helpers/nodeIsKind';
 
 export class Rule extends Lint.Rules.AbstractRule {
 	public apply(sourceFile: ts.SourceFile) {
-		return this.applyWithWalker(new NoUnnecessaryParensForArrowFunctionArgumentsWalker(sourceFile, this.getOptions()));
+		return this.applyWithFunction(sourceFile, walk);
 	}
 }
 
-class NoUnnecessaryParensForArrowFunctionArgumentsWalker extends Lint.RuleWalker {
-	protected visitArrowFunction(node: ts.ArrowFunction) {
-		super.visitArrowFunction(node);
-		if (node.parameters.length !== 1) {
-			return;
+function walk(ctx: Lint.WalkContext<void>) {
+	ts.forEachChild(ctx.sourceFile, function cb(node: ts.Node): void {
+		if (
+			nodeIsKind<ts.ArrowFunction>(node, 'ArrowFunction') &&
+			node.parameters.length === 1
+		) {
+			check(ctx, node);
 		}
+		return ts.forEachChild(node, cb);
+	});
+}
 
-		const param = node.parameters[0];
-		const hasParens = this.argumentsAreWrappedInParens(node);
-		const hasType = this.hasTypeAnnotation(param);
-		const isDestructured = this.isDestructured(param);
-		const isRest = this.isRestParameter(param);
-		const hasDefaultValue = this.hasDefaultValue(param);
+function check(ctx: Lint.WalkContext<void>, node: ts.ArrowFunction) {
+	const param = node.parameters[0];
+	const hasParens = node.getText(ctx.sourceFile).indexOf('(') === 0;
+	const hasType = !!param.type;
+	const isRest = !!param.dotDotDotToken;
+	const hasDefaultValue = !!param.initializer;
+	const isDestructured =
+		param.name.kind === ts.SyntaxKind.ObjectBindingPattern ||
+		param.name.kind === ts.SyntaxKind.ArrayBindingPattern;
 
-		if (hasParens && !(hasType || isDestructured || isRest || hasDefaultValue)) {
-			this.addFailure(
-				this.createFailure(
-					node.getStart(this.getSourceFile()),
-					1,
-					'arrow functions with one argument should not have parentheses around the argument'
-				)
-			);
-		}
-	}
-
-	private argumentsAreWrappedInParens(node: ts.ArrowFunction) {
-		return node.getText(this.getSourceFile()).indexOf('(') === 0;
-	}
-
-	private hasTypeAnnotation(param: ts.ParameterDeclaration) {
-		return !!param.type;
-	}
-
-	private isDestructured(param: ts.ParameterDeclaration) {
-		return param.name.kind === ts.SyntaxKind.ObjectBindingPattern ||
-			param.name.kind === ts.SyntaxKind.ArrayBindingPattern;
-	}
-
-	private isRestParameter(param: ts.ParameterDeclaration) {
-		return !!param.dotDotDotToken;
-	}
-
-	private hasDefaultValue(param: ts.ParameterDeclaration) {
-		return !!param.initializer;
+	if (hasParens && !(hasType || isDestructured || isRest || hasDefaultValue)) {
+		ctx.addFailureAtNode(
+			param,
+			'arrow functions with one argument should not have parentheses around the argument',
+		);
 	}
 }

@@ -17,4 +17,4 @@ ok = (x = {}) => x;
 ok = (x = []) => x;
 
 const fails = (x) => x;
-              ~ [arrow functions with one argument should not have parentheses around the argument]
+               ~ [arrow functions with one argument should not have parentheses around the argument]

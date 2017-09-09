@@ -4,7 +4,7 @@
     "class-name": true,
     "curly": true,
     "indent": [ true, "tabs" ],
-    "interface-name": [ true, "always-prefix" ],
+    "interface-name": [ true, "never-prefix" ],
     "label-position": true,
     "max-line-length": [ true, 120 ],
     "member-access": true,
