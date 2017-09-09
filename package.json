@@ -5,10 +5,19 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --inlineSourceMap",
-    "lint": "tslint rules/*.ts helpers/*.ts",
-    "test": "node test/runner.js",
     "ci": "yarn build && yarn test",
+    "lint": "tslint rules/*.ts helpers/*.ts && prettier --list-different \"**/*.ts\"",
+    "format": "prettier --write \"**/*.ts\"",
+    "precommit": "lint-staged",
+    "test": "node test/runner.js",
     "watch": "tsc --watch & node test/watch"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "tslint --fix",
+      "prettier --write",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -38,6 +47,9 @@
   "devDependencies": {
     "@types/node": "^7.0.28",
     "chokidar": "^1.6.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.1.3",
+    "prettier": "^1.6.1",
     "tslint": "^5.0.0",
     "typescript": "^2.5.2"
   }
