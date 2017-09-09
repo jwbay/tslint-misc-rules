@@ -19,7 +19,7 @@ class JsxAttributeSpacingWalker extends Lint.RuleWalker {
 		super.visitJsxSelfClosingElement(node);
 	}
 
-	private validateAttributes(nodes: ts.JsxAttribute[]) {
+	private validateAttributes(nodes: ts.NodeArray<ts.JsxAttribute>) {
 		const sf = this.getSourceFile();
 		const nonSpreadAttributes = nodes.filter(n => n.kind === ts.SyntaxKind.JsxAttribute);
 
