@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/jwbay/tslint-misc-rules.svg?branch=master)](https://travis-ci.org/jwbay/tslint-misc-rules)
 [![npm version](https://img.shields.io/npm/v/tslint-misc-rules.svg?style=flat-square)](https://www.npmjs.com/package/tslint-misc-rules)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/jwbay/tslint-misc-rules/pulls)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![BADGINATOR](https://badginator.herokuapp.com/jwbay/tslint-misc-rules.svg)](https://github.com/defunctzombie/badginator)
 # misc-tslint-rules
 
 Collection of miscellaneous TSLint rules
