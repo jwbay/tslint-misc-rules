@@ -15,9 +15,14 @@ class SortImportsWalker extends Lint.RuleWalker {
 			const unsortedLines = importGroup.map(importDeclaration => {
 				// opening brace is below alphanumeric characters char-code-wise, but want named imports above defaults
 				// + comes directly after *, so swap with that
-				const sortableLine = importDeclaration.getText(sf)
+				let sortableLine = importDeclaration.getText(sf)
 					.toLowerCase()
 					.replace('import {', 'import +');
+
+				if (this.hasOption('whitespace-insensitive')) {
+					sortableLine = this.normalizeAllWhitespace(sortableLine);
+				}
+
 				sortableLinesToImports.set(sortableLine, importDeclaration);
 				return sortableLine;
 			});
@@ -36,7 +41,7 @@ class SortImportsWalker extends Lint.RuleWalker {
 					);
 					const expectedImport = importGroup[expectedImportIndex];
 					const actualImport = importGroup[i];
-					const message = this.replaceLineBreaksWithSpaces(
+					const message = this.normalizeAllWhitespace(
 						this.getFailureMessage(expectedImport, actualImport)
 					);
 
@@ -134,7 +139,7 @@ class SortImportsWalker extends Lint.RuleWalker {
 		);
 	}
 
-	private replaceLineBreaksWithSpaces(content: string) {
+	private normalizeAllWhitespace(content: string) {
 		return content
 			.replace(/[\s]+/g, ' ')
 			.replace(', }', ' }');

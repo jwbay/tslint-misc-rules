@@ -21,21 +21,19 @@ Collection of miscellaneous TSLint rules
 
 # <a name="TOC"></a>Rules
 
-Rules with * support autofixing.
-
-1. [sort-imports](#1)
+1. [sort-imports](#1) [has autofix]
 1. [prefer-es6-imports](#2)
-1. [class-method-newlines](#3) *
-1. [jsx-attribute-spacing](#4) *
-1. [jsx-expression-spacing](#5) *
-1. [jsx-no-closing-bracket-newline](#6) *
-1. [jsx-no-braces-for-string-attributes](#7) *
+1. [class-method-newlines](#3) [has autofix]
+1. [jsx-attribute-spacing](#4) [has autofix]
+1. [jsx-expression-spacing](#5) [has autofix]
+1. [jsx-no-closing-bracket-newline](#6) [has autofix]
+1. [jsx-no-braces-for-string-attributes](#7) [has autofix]
 1. [react-lifecycle-order](#8)
-1. [prefer-or-operator-over-ternary](#9) *
+1. [prefer-or-operator-over-ternary](#9) [has autofix]
 1. [no-property-initializers](#10)
 1. [camel-case-local-function](#11)
 1. [declare-class-methods-after-use](#12)
-1. [no-braces-for-single-line-arrow-functions](#13) *
+1. [no-braces-for-single-line-arrow-functions](#13) [has autofix]
 1. [no-unnecessary-parens-for-arrow-function-arguments](#14)
 
 ## <a name="1"></a>"sort-imports" [↑](#TOC) 
@@ -62,6 +60,27 @@ Precedence is essentially `*`, `{`, then alpha, so:
 import * as a from "a";
 import { b, c } from "bc";
 import d from "d";
+```
+This rule has one option, `whitespace-insensitive`, that collapses all whitespace spans (including line breaks) down to one space when sorting. This provides compatibility with formatters like Prettier, which may decide to turn a single-line import into a multi-line import when it grows too long. This could otherwise introduce a lint failure. Ex:
+
+```json
+"sort-imports": [ true, "whitespace-insensitive" ]
+```
+Fails:
+```ts
+import {
+  x,
+  y,
+} from "xy";
+import { a } from "a";
+```
+Passes:
+```ts
+import { a } from "a";
+import {
+  x,
+  y,
+} from "xy";
 ```
 
 ## <a name="2"></a>"prefer-es6-imports" [↑](#TOC)

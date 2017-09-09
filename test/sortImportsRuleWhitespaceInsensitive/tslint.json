@@ -1,0 +1,6 @@
+{
+    "rules": {
+        "sort-imports": [true, "whitespace-insensitive"]
+    },
+    "rulesDirectory": "../../rules"
+}

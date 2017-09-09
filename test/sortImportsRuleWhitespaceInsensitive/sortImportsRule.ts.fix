@@ -1,0 +1,134 @@
+const breakGroup = () => null;
+
+//positive cases
+
+import foo from 'foo';
+
+breakGroup();
+
+import a from 'a';
+import b from 'b';
+import c from 'c';
+
+breakGroup();
+
+import 'z-side-effect';
+import 'a-side-effect';
+import a from 'a';
+import b from 'b';
+
+breakGroup();
+
+import * as a from 'a';
+import { x, y } from 'xy';
+import { z } from 'z';
+import b from 'b';
+import c = require('c');
+import e from 'e';
+
+breakGroup();
+
+import * as f from 'f';
+import { a } from 'a';
+import {
+    x,
+    y,
+} from 'xy';
+import {
+    z,
+} from 'z';
+import b from 'b';
+import c = require('c');
+import e from 'e';
+
+//negative cases
+
+breakGroup();
+
+import a from 'a';
+import b from 'b';
+import c from 'c';
+
+breakGroup();
+
+import a from 'a';
+import B from 'B';
+import C from 'C';
+
+breakGroup();
+
+import a from 'a';
+// comment
+import B from 'B';
+import C from 'C';
+
+breakGroup();
+
+// comment
+import a from 'a';
+import B from 'B';
+import C from 'C';
+
+breakGroup();
+
+import { a } from 'a';
+import { x } from 'x';
+
+breakGroup();
+
+import * as b from 'b';
+import * as x from 'x';
+
+breakGroup();
+
+import a = require('a');
+import x = require('x');
+
+breakGroup();
+
+import * as a from 'a';
+import { x, y } from 'xy';
+import b from 'b';
+import d = require('d');
+import e from 'e';
+
+breakGroup();
+
+import * as a from 'a';
+import { x, y } from 'xy';
+import b from 'b';
+import d = require('d');
+import e from 'e';
+
+breakGroup();
+
+import * as a from 'a';
+import { x, y } from 'xy';
+import b = require('b');
+import c from 'c';
+
+breakGroup();
+
+import * as a from 'a';
+import {
+    a,
+    b,
+} from 'ab';
+import {
+    x,
+    y
+} from 'xy';
+import { z } from 'z';
+import b from 'b';
+import c = require('c');
+import e from 'e';
+
+breakGroup();
+
+import * as f from 'f';
+import { a } from 'a';
+import {
+    x,
+    y,
+} from 'xy';
+import b from 'b';
