@@ -26,6 +26,21 @@ import b from 'b';
 import c = require('c');
 import e from 'e';
 
+breakGroup();
+
+import * as f from 'f';
+import {
+    x,
+    y,
+} from 'xy';
+import {
+    z,
+} from 'z';
+import { a } from 'a';
+import b from 'b';
+import c = require('c');
+import e from 'e';
+
 //negative cases
 
 breakGroup();
@@ -91,3 +106,29 @@ import * as a from 'a';
 import { x, y } from 'xy';
 import b = require('b');
 import c from 'c';
+
+breakGroup();
+
+import * as a from 'a';
+import {
+    a,
+    b,
+} from 'ab';
+import {
+    x,
+    y
+} from 'xy';
+import { z } from 'z';
+import b from 'b';
+import c = require('c');
+import e from 'e';
+
+breakGroup();
+
+import * as f from 'f';
+import {
+    x,
+    y,
+} from 'xy';
+import { a } from 'a';
+import b from 'b';

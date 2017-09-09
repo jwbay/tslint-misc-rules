@@ -36,7 +36,9 @@ class SortImportsWalker extends Lint.RuleWalker {
 					);
 					const expectedImport = importGroup[expectedImportIndex];
 					const actualImport = importGroup[i];
-					const message = this.getFailureMessage(expectedImport, actualImport);
+					const message = this.replaceLineBreaksWithSpaces(
+						this.getFailureMessage(expectedImport, actualImport)
+					);
 
 					const sortedImports = sortedLines.map(line => {
 						return sortableLinesToImports.get(line).getFullText(sf).trim();
@@ -52,13 +54,15 @@ class SortImportsWalker extends Lint.RuleWalker {
 						sortedImports.join(newline)
 					);
 
-					this.addFailure(
-						this.createFailure(
-							actualImport.getStart(sf),
-							actualImport.getWidth(sf),
-							message,
-							fix
-						)
+					// work around some kind of multiline error span bug in tslint rule testing
+					const failureNode = /\n/.test(actualImport.getText(sf).trim())
+						? actualImport.getFirstToken()
+						: actualImport;
+
+					this.addFailureAtNode(
+						failureNode,
+						message,
+						fix
 					);
 					break;
 				}
@@ -128,5 +132,11 @@ class SortImportsWalker extends Lint.RuleWalker {
 			!this.isImportRequireStatement(node) &&
 			!node.importClause
 		);
+	}
+
+	private replaceLineBreaksWithSpaces(content: string) {
+		return content
+			.replace(/[\s]+/g, ' ')
+			.replace(', }', ' }');
 	}
 }

@@ -26,6 +26,21 @@ import b from 'b';
 import c = require('c');
 import e from 'e';
 
+breakGroup();
+
+import * as f from 'f';
+import {
+    x,
+    y,
+} from 'xy';
+import {
+    z,
+} from 'z';
+import { a } from 'a';
+import b from 'b';
+import c = require('c');
+import e from 'e';
+
 //negative cases
 
 breakGroup();
@@ -101,3 +116,31 @@ import { x, y } from 'xy';
 import c from 'c';
 ~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected 'b' but saw 'c']
 import b = require('b');
+
+breakGroup();
+
+import {
+~~~~~~ [out-of-order imports: expected '* as a' but saw '{ a, b }']
+    a,
+    b,
+} from 'ab';
+import * as a from 'a';
+import { z } from 'z';
+import {
+    x,
+    y
+} from 'xy';
+import b from 'b';
+import c = require('c');
+import e from 'e';
+
+breakGroup();
+
+import * as f from 'f';
+import { a } from 'a';
+~~~~~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected '{ x, y }' but saw '{ a }']
+import {
+    x,
+    y,
+} from 'xy';
+import b from 'b';
