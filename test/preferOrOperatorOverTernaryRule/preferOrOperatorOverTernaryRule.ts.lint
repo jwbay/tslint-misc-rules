@@ -10,4 +10,12 @@ const passesTwo = foo ? foo + 1 : bar;
 const passesThree = foo || bar;
 const passesFour = foo === 0 ? foo : bar;
 
+const failsTwo = a.b.c ? a.b.c : d;
+                         ~~~~~ [prefer-or]
+const failsThree = this.x.y ? this.x.y : z;
+                              ~~~~~~~~ [prefer-or]
+
+const passesFive = a.b.c() ? a.b.c() : d;
+const passesSix = a.b().c ? a.b().c : d;
+const passesSeven = a().b.c ? a().b.c : d;
 [prefer-or]: use '||' when first and second operands of ternary are identical

@@ -9,3 +9,9 @@ const passesTwo = foo ? foo + 1 : bar;
 const passesThree = foo || bar;
 const passesFour = foo === 0 ? foo : bar;
 
+const failsTwo = a.b.c || d;
+const failsThree = this.x.y || z;
+
+const passesFive = a.b.c() ? a.b.c() : d;
+const passesSix = a.b().c ? a.b().c : d;
+const passesSeven = a().b.c ? a().b.c : d;

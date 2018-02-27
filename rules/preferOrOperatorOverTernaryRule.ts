@@ -22,9 +22,9 @@ function check(ctx: Lint.WalkContext<void>, node: ts.ConditionalExpression) {
 	const { condition, whenTrue, questionToken, colonToken } = node
 
 	if (
-		condition.kind === ts.SyntaxKind.Identifier &&
-		whenTrue.kind === ts.SyntaxKind.Identifier &&
-		condition.getText(sf) === whenTrue.getText(sf)
+		condition.getText(sf) === whenTrue.getText(sf) &&
+		((isIdentifier(condition) && isIdentifier(whenTrue)) ||
+			(isPropertyAccessChain(condition) && isPropertyAccessChain(whenTrue)))
 	) {
 		const fix = Lint.Replacement.replaceFromTo(
 			questionToken.getStart(sf),
@@ -37,4 +37,29 @@ function check(ctx: Lint.WalkContext<void>, node: ts.ConditionalExpression) {
 			fix
 		)
 	}
+}
+
+function isPropertyAccessChain(startNode: ts.Expression) {
+	if (!isPropertyAccess(startNode) || !isIdentifier(startNode.name)) {
+		return false
+	}
+
+	let node = startNode
+	while (isPropertyAccess(node.expression)) {
+		node = node.expression
+	}
+
+	return (
+		node.expression &&
+		(isIdentifier(node.expression) ||
+			node.expression.kind === ts.SyntaxKind.ThisKeyword)
+	)
+}
+
+function isIdentifier(node: ts.Node): node is ts.Identifier {
+	return node && node.kind === ts.SyntaxKind.Identifier
+}
+
+function isPropertyAccess(node: ts.Node): node is ts.PropertyAccessExpression {
+	return node && node.kind === ts.SyntaxKind.PropertyAccessExpression
 }
