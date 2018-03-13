@@ -90,7 +90,7 @@ class ReactLifecyleOrderRule extends Lint.RuleWalker {
 				'React.PureComponent',
 				'Component',
 				'PureComponent',
-			].indexOf(ancestor.getText(this.getSourceFile())) > -1
+			].indexOf(ancestor.getText(this.getSourceFile()).replace(/<.+?>$/, '')) > -1
 		)
 	}
 }
