@@ -19,6 +19,18 @@ class PassesToo extends React.Component {
     baz() {}
 }
 
+class PassesGeneric extends React.Component<any, any> {
+    property: any;
+    componentWillMount() {}
+    componentWillReceiveProps() {}
+    componentDidMount() {}
+    shouldComponentUpdate() {}
+    componentWillUpdate() {}
+    componentDidUpdate() {}
+    render() {}
+    componentWillUnmount() {}
+}
+
 class PassesNotComponent extends NotComponent {
     constructor() {}
     foo() {}
@@ -79,6 +91,17 @@ class FailsReactPureComponent extends React.PureComponent {
 }
 
 class FailsPureComponent extends PureComponent {
+    constructor() {}
+    foo() {}
+    render() {}
+    ~~~~~~ [expected React lifecyle method 'componentWillMount']
+    bar() {}
+    componentWillMount() {}
+    ~~~~~~~~~~~~~~~~~~ [expected React lifecyle method 'render']
+    baz() {}
+}
+
+class FailsReactComponentGeneric extends React.Component<any, any> {
     constructor() {}
     foo() {}
     render() {}
