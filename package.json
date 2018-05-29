@@ -2,7 +2,7 @@
   "name": "tslint-misc-rules",
   "version": "3.3.3",
   "description": "Collection of miscellaneous TSLint rules",
-  "main": "index.js",
+  "main": "rules/index.json",
   "scripts": {
     "build": "tsc --inlineSourceMap",
     "ci": "yarn build && yarn test",
