@@ -16,7 +16,7 @@ Collection of miscellaneous TSLint rules
     "sort-imports": true
   },
   "rulesDirectory": [
-    "./node_modules/tslint-misc-rules/rules"
+    "tslint-misc-rules"
   ]
 }
 ```
@@ -38,7 +38,7 @@ Collection of miscellaneous TSLint rules
 1. [no-braces-for-single-line-arrow-functions](#13) [has autofix]
 1. [no-unnecessary-parens-for-arrow-function-arguments](#14)
 
-## <a name="1"></a>"sort-imports" [↑](#TOC) 
+## <a name="1"></a>"sort-imports" [↑](#TOC)
 Fails:
 ```ts
 import b from "b";
