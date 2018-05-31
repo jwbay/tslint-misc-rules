@@ -1,28 +1,22 @@
 language: node_js
 
 node_js:
-  - "10"
-  - "8"
-  - "6"
+  - 10
+  - 8
+  - 6
+
+env:
+  - TYPESCRIPT_VERSION="2.9"
+  - TYPESCRIPT_VERSION="2.8"
+  - TYPESCRIPT_VERSION="2.7"
+  - TYPESCRIPT_VERSION="2.6"
+  - TYPESCRIPT_VERSION="2.5"
+  - TYPESCRIPT_VERSION="2.4"
+  - TYPESCRIPT_VERSION="2.3"
+  - TYPESCRIPT_VERSION="2.2"
+  - TYPESCRIPT_VERSION="2.1"
 
 script:
   - yarn lint
-  - yarn add typescript@2.1
+  - yarn add typescript@${TYPESCRIPT_VERSION}
   - yarn ci
-  - yarn add typescript@2.2
-  - yarn ci
-  - yarn add typescript@2.3
-  - yarn ci
-  - yarn add typescript@2.4
-  - yarn ci
-  - yarn add typescript@2.5
-  - yarn ci
-  - yarn add typescript@2.6
-  - yarn ci
-  - yarn add typescript@2.7
-  - yarn ci
-  - yarn add typescript@2.8
-  - yarn ci
-  - yarn add typescript@2.9
-  - yarn ci
-
