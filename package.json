@@ -6,8 +6,10 @@
   "scripts": {
     "build": "tsc --inlineSourceMap",
     "ci": "yarn build && yarn test",
-    "lint": "tslint rules/*.ts helpers/*.ts && prettier --list-different \"**/*.ts\"",
-    "format": "prettier --write \"**/*.ts\"",
+    "lint:ts": "tslint rules/*.ts helpers/*.ts && prettier --list-different \"**/*.ts\"",
+    "lint:js": "prettier --list-different \"test/**/*.js\"",
+    "lint": "yarn lint:ts && yarn lint:js",
+    "format": "prettier --write \"**/*.ts\" && prettier --write \"test/**/*.js\"",
     "precommit": "lint-staged",
     "test": "node test/runner.js",
     "watch": "tsc --watch & node test/watch"
@@ -15,6 +17,10 @@
   "lint-staged": {
     "*.ts": [
       "tslint --fix",
+      "prettier --write",
+      "git add"
+    ],
+    "test/**/*.js": [
       "prettier --write",
       "git add"
     ]
