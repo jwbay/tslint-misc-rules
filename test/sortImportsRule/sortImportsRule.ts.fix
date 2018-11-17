@@ -132,3 +132,12 @@ import {
 } from 'xy';
 import { a } from 'a';
 import b from 'b';
+
+breakGroup();
+
+import 'b';
+import 'a';
+import 'z';
+import 'c';
+import * as z from 'z';
+import { x } from 'y';

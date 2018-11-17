@@ -37,7 +37,16 @@ class Walker extends Lint.AbstractWalker<Options> {
 				return sortableLine
 			})
 
-			const sortedLines = unsortedLines.slice().sort()
+			const sortedLines = unsortedLines.slice().sort((left, right) => {
+				if (
+					this.isSideEffectImport(sortableLinesToImports.get(left)) &&
+					this.isSideEffectImport(sortableLinesToImports.get(right))
+				) {
+					return 0
+				}
+
+				return left > right ? 1 : left < right ? -1 : 0
+			})
 
 			for (let i = 0; i < unsortedLines.length; i += 1) {
 				if (

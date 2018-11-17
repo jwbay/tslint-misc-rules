@@ -144,3 +144,13 @@ import {
     y,
 } from 'xy';
 import b from 'b';
+
+breakGroup();
+
+import 'b';
+import 'a';
+import 'z';
+import 'c';
+import { x } from 'y';
+~~~~~~~~~~~~~~~~~~~~~~  [out-of-order imports: expected '* as z' but saw '{ x }']
+import * as z from 'z';
