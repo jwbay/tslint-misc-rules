@@ -16,13 +16,10 @@ var exitCode = 0
 
 directories.forEach(testFolder => {
 	try {
-		execSync(
-			'node ./node_modules/tslint/lib/tslint-cli.js --test test/' + testFolder,
-			{
-				stdio: 'inherit',
-				encoding: 'utf8',
-			}
-		)
+		execSync('node ./node_modules/tslint/bin/tslint --test test/' + testFolder, {
+			stdio: 'inherit',
+			encoding: 'utf8',
+		})
 	} catch (err) {
 		if (typeof err.signal === 'undefined') {
 			console.error(err.stack)
