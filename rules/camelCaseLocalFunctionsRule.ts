@@ -20,7 +20,17 @@ function walk(ctx: Lint.WalkContext<void>) {
 	})
 }
 
-const whitelist = ['Array', 'Boolean', 'Error', 'Function', 'Number', 'Object', 'String']
+const whitelist = [
+	'Array',
+	'Boolean',
+	'Error',
+	'Function',
+	'Number',
+	'Object',
+	'String',
+	'Symbol',
+	'BigInt',
+]
 
 function checkFunctionName(ctx: Lint.WalkContext<void>, name: ts.Identifier) {
 	const firstLetter = name.text.charAt(0)

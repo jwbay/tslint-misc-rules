@@ -27,6 +27,8 @@ Array(1, 2, 3);
 Object({ x: 42 });
 Function('return 42');
 Error('boom');
+Symbol();
+BigInt();
 
 const fails1 = Upper();
                ~~~~~ [camelcase]
