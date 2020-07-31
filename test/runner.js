@@ -6,15 +6,15 @@ var pattern = process.argv[2]
 
 var directories = fs
 	.readdirSync(path.join(process.cwd(), 'test'))
-	.filter(name => !path.extname(name))
+	.filter((name) => !path.extname(name))
 
 if (pattern) {
-	directories = directories.filter(name => name.match(new RegExp(pattern, 'i')))
+	directories = directories.filter((name) => name.match(new RegExp(pattern, 'i')))
 }
 
 var exitCode = 0
 
-directories.forEach(testFolder => {
+directories.forEach((testFolder) => {
 	try {
 		execSync('node ./node_modules/tslint/bin/tslint --test test/' + testFolder, {
 			stdio: 'inherit',

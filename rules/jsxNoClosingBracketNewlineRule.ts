@@ -40,7 +40,7 @@ function findClosingTokens(node: ts.JsxOpeningLikeElement) {
 	return node
 		.getChildren()
 		.filter(
-			child =>
+			(child) =>
 				child.kind === ts.SyntaxKind.SlashToken ||
 				child.kind === ts.SyntaxKind.GreaterThanToken
 		)

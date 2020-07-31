@@ -6,7 +6,7 @@ export function getClassMethods(node: ts.ClassLikeDeclaration) {
 		return []
 	}
 
-	return node.members.filter(m => {
+	return node.members.filter((m) => {
 		if (nodeIsKind<ts.MethodDeclaration>(m, 'MethodDeclaration')) {
 			return true
 		}

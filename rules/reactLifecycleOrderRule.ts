@@ -48,7 +48,7 @@ class ReactLifecyleOrderRule extends Lint.RuleWalker {
 
 		const sf = this.getSourceFile()
 		const relevantMethods = getClassMethods(node).filter(
-			method => this.expectedOrder.indexOf(method.name.getText(sf)) > -1
+			(method) => this.expectedOrder.indexOf(method.name.getText(sf)) > -1
 		)
 
 		const sortedMethods = relevantMethods.slice().sort((left, right) => {

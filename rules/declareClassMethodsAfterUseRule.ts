@@ -41,14 +41,14 @@ class DeclareClassMethodsAfterUseWalker extends Lint.AbstractWalker<{}> {
 		for (const method of getClassMethods(node)) {
 			this.currentMethodName = method.name.getText(this.getSourceFile())
 			this.visitedMethodDeclarations.push(this.currentMethodName)
-			ts.forEachChild(method, child => {
+			ts.forEachChild(method, (child) => {
 				this.visitChildren(child)
 			})
 		}
 	}
 
 	private visitChildren(node: ts.Node) {
-		ts.forEachChild(node, child => {
+		ts.forEachChild(node, (child) => {
 			if (nodeIsKind<ts.CallExpression>(child, 'CallExpression')) {
 				this.visitCallExpressionInMethod(child)
 			}

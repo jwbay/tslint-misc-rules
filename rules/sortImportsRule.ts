@@ -21,7 +21,7 @@ class Walker extends Lint.AbstractWalker<Options> {
 	public walk(sf: ts.SourceFile) {
 		for (const importGroup of this.getImportGroups(sf)) {
 			const sortableLinesToImports = new Map<string, ts.ImportDeclaration>()
-			const unsortedLines = importGroup.map(importDeclaration => {
+			const unsortedLines = importGroup.map((importDeclaration) => {
 				// opening brace is below alphanumeric characters char-code-wise, but want named imports above defaults
 				// + comes directly after *, so swap with that
 				let sortableLine = importDeclaration
@@ -58,7 +58,7 @@ class Walker extends Lint.AbstractWalker<Options> {
 				) {
 					const expectedImportIndex = this.findIndex(
 						unsortedLines,
-						line => line === sortedLines[i]
+						(line) => line === sortedLines[i]
 					)
 					const expectedImport = importGroup[expectedImportIndex]
 					const actualImport = importGroup[i]
@@ -66,11 +66,8 @@ class Walker extends Lint.AbstractWalker<Options> {
 						this.getFailureMessage(expectedImport, actualImport)
 					)
 
-					const sortedImports = sortedLines.map(line => {
-						return sortableLinesToImports
-							.get(line)
-							.getFullText(sf)
-							.trim()
+					const sortedImports = sortedLines.map((line) => {
+						return sortableLinesToImports.get(line).getFullText(sf).trim()
 					})
 
 					const groupStart = importGroup[0].getStart(sf)
@@ -109,7 +106,7 @@ class Walker extends Lint.AbstractWalker<Options> {
 			}
 		}
 
-		return importGroups.filter(group => group.length > 0)
+		return importGroups.filter((group) => group.length > 0)
 	}
 
 	private findIndex(array: string[], predicate: (str: string) => boolean) {

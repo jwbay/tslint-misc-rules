@@ -25,7 +25,7 @@ function checkAttributes(
 	nodes: ts.NodeArray<ts.JsxAttribute>
 ) {
 	const sf = ctx.sourceFile
-	const nonSpreadAttributes = nodes.filter(n => n.kind === ts.SyntaxKind.JsxAttribute)
+	const nonSpreadAttributes = nodes.filter((n) => n.kind === ts.SyntaxKind.JsxAttribute)
 
 	for (const attribute of nonSpreadAttributes) {
 		const { initializer, name } = attribute

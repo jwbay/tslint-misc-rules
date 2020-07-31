@@ -4,12 +4,12 @@ var path = require('path')
 
 chokidar
 	.watch('rules/*.js', { ignoreInitial: true })
-	.on('change', file => handleSourceChange(file))
-	.on('add', file => handleSourceChange(file))
+	.on('change', (file) => handleSourceChange(file))
+	.on('add', (file) => handleSourceChange(file))
 chokidar
 	.watch('test/**/*.{json,lint,fix}', { ignoreInitial: true })
-	.on('change', file => handleTestChange(file))
-	.on('add', file => handleTestChange(file))
+	.on('change', (file) => handleTestChange(file))
+	.on('add', (file) => handleTestChange(file))
 
 function handleSourceChange(file) {
 	runTest(path.basename(file, path.extname(file)))

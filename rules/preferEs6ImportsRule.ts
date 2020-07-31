@@ -29,7 +29,7 @@ class PreferEs6ImportsWalker extends Lint.RuleWalker {
 				.pop()
 				.replace(/['"]/g, '')
 
-			if (bannedModuleRequires.some(banned => moduleName === banned)) {
+			if (bannedModuleRequires.some((banned) => moduleName === banned)) {
 				this.addFailure(
 					this.createFailure(
 						node.getStart(sf),
